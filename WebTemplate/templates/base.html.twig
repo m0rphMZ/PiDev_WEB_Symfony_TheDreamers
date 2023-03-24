@@ -39,7 +39,7 @@
   <header id="header" class="header fixed-top d-flex align-items-center">
     <div class="container d-flex align-items-center justify-content-between">
 
-      <a href="index.html" class="logo d-flex align-items-center me-auto me-lg-0">  <!-- Nepointi aal path bel name moch path -->
+      <a href={{ path ('app_home') }} class="logo d-flex align-items-center me-auto me-lg-0">  <!-- Nepointi aal path bel name moch path -->
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="{{ asset('img/logo.png') }}" alt=""> -->
         <h1>Touskieart<span>.</span></h1>
@@ -47,11 +47,11 @@
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a href="#home">Home</a></li>
+          <li><a href={{ path ('app_home') }}>Home</a></li>
           <li><a href="#about">Evenement</a></li>
           <li><a href="#menu">Locations</a></li>
           <li><a href="#events">Produits</a></li>
-          <li><a href="#reclamation">Reclamations</a></li>
+          <li><a href={{ path ('app_reclamation') }}>Reclamations</a></li>
           <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
             <ul>
               <li><a href="#">Drop Down 1</a></li>

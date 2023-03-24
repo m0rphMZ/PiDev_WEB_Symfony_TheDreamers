@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ReclamationController!{% endblock %}
+
+{% block hero %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>List of Reclamations</h1>
+                <hr>
+                {% if reclamations is empty %}
+                    <p>No reclamations found.</p>
+                {% else %}
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Id Reclamation</th>
+                                <th>Titre</th>
+                                <th>Description</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for reclamation in reclamations %}
+                                <tr>
+                                    <td>{{ reclamation.recId }}</td>
+                                    <td>{{ reclamation.titreRec }}</td>
+                                    <td>{{ reclamation.description }}</td>
+                                    <td>{{ reclamation.dateCreation|date('m/d/Y') }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+                <a href="{{ path('new_reclamation') }}" class="btn btn-primary">Add Reclamation</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block About %}{% endblock %}
+{% block WhyUs %}{% endblock %}
+{% block stats %}{% endblock %}
+{% block menu %}{% endblock %}
+{% block testimonial %}{% endblock %}
+{% block events %}{% endblock %}
+{% block booking %}{% endblock %}
+{% block gallery %}{% endblock %}
+{% block contact %}{% endblock %}
+
+
+
