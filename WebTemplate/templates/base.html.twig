@@ -30,15 +30,16 @@
   <link href="{{ asset('css/main.css') }}" rel="stylesheet">
   {% endblock %}
 </head>
-
 <body>
-{% block body %}
+
+
+{% block header %}
 
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
     <div class="container d-flex align-items-center justify-content-between">
 
-      <a href="index.html" class="logo d-flex align-items-center me-auto me-lg-0">
+      <a href="index.html" class="logo d-flex align-items-center me-auto me-lg-0">  <!-- Nepointi aal path bel name moch path -->
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="{{ asset('img/logo.png') }}" alt=""> -->
         <h1>Touskieart<span>.</span></h1>
@@ -46,11 +47,11 @@
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a href="#hero">Home</a></li>
+          <li><a href="#home">Home</a></li>
           <li><a href="#about">Evenement</a></li>
           <li><a href="#menu">Locations</a></li>
           <li><a href="#events">Produits</a></li>
-          <li><a href="#chefs">Reclamations</a></li>
+          <li><a href="#reclamation">Reclamations</a></li>
           <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
             <ul>
               <li><a href="#">Drop Down 1</a></li>
@@ -78,7 +79,11 @@
 
     </div>
   </header><!-- End Header -->
+  {% endblock %}
 
+
+
+  {% block hero %}
   <!-- ======= Hero Section ======= -->
   <section id="hero" class="hero d-flex align-items-center section-bg">
     <div class="container">
@@ -97,7 +102,11 @@
       </div>
     </div>
   </section><!-- End Hero Section -->
+  {% endblock %}
 
+
+
+  {% block About %}
   <main id="main">
 
     <!-- ======= About Section ======= -->
@@ -142,7 +151,12 @@
 
       </div>
     </section><!-- End About Section -->
+    {% endblock %}
 
+
+
+
+    {% block WhyUs %}
     <!-- ======= Why Us Section ======= -->
     <section id="why-us" class="why-us section-bg">
       <div class="container" data-aos="fade-up">
@@ -196,7 +210,12 @@
 
       </div>
     </section><!-- End Why Us Section -->
+    {% endblock %}
 
+
+
+
+    {% block stats %}
     <!-- ======= Stats Counter Section ======= -->
     <section id="stats-counter" class="stats-counter">
       <div class="container" data-aos="zoom-out">
@@ -235,7 +254,11 @@
 
       </div>
     </section><!-- End Stats Counter Section -->
+    {% endblock %}
 
+
+
+    {% block menu %}
     <!-- ======= Menu Section ======= -->
     <section id="menu" class="menu">
       <div class="container" data-aos="fade-up">
@@ -590,7 +613,15 @@
 
       </div>
     </section><!-- End Menu Section -->
+    {% endblock %}
 
+
+
+
+
+
+
+    {% block testimonial %}
     <!-- ======= Testimonials Section ======= -->
     <section id="testimonials" class="testimonials section-bg">
       <div class="container" data-aos="fade-up">
@@ -705,7 +736,19 @@
 
       </div>
     </section><!-- End Testimonials Section -->
+    {% endblock %}
 
+
+
+
+
+
+
+
+
+
+
+    {% block events %}
     <!-- ======= Events Section ======= -->
     <section id="events" class="events">
       <div class="container-fluid" data-aos="fade-up">
@@ -748,6 +791,10 @@
 
       </div>
     </section><!-- End Events Section -->
+    {% endblock %}
+
+
+
 
     <!-- ======= Chefs Section ======= -->
     <section id="chefs" class="chefs section-bg">
@@ -822,6 +869,12 @@
       </div>
     </section><!-- End Chefs Section -->
 
+
+
+
+
+
+    {% block booking %}
     <!-- ======= Book A Table Section ======= -->
     <section id="book-a-table" class="book-a-table">
       <div class="container" data-aos="fade-up">
@@ -880,7 +933,13 @@
 
       </div>
     </section><!-- End Book A Table Section -->
+    {% endblock %}
 
+
+
+
+
+    {% block gallery %}
     <!-- ======= Gallery Section ======= -->
     <section id="gallery" class="gallery section-bg">
       <div class="container" data-aos="fade-up">
@@ -906,7 +965,14 @@
 
       </div>
     </section><!-- End Gallery Section -->
+    {% endblock %}
 
+
+
+
+
+
+    {% block contact %}
     <!-- ======= Contact Section ======= -->
     <section id="contact" class="contact">
       <div class="container" data-aos="fade-up">
@@ -991,9 +1057,23 @@
 
       </div>
     </section><!-- End Contact Section -->
+    {% endblock %}
+
+
+
+
+
+
+
 
   </main><!-- End #main -->
 
+
+
+
+
+
+  {% block footer %}
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
 
@@ -1061,6 +1141,9 @@
 
   </footer><!-- End Footer -->
   <!-- End Footer -->
+  {% endblock %}
+
+
 
   <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
@@ -1077,7 +1160,7 @@
 
   <!-- Template Main JS File -->
   <script src="{{ asset('js/main.js') }}"></script>
-  {% endblock %}
+ 
   
 {% endblock %}
 </body>
