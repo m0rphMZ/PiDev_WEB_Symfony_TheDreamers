@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle Réclamation{% endblock %}
+
+{% block hero %}
+    <div class="hero">
+        <div class="container">
+            <h1 data-aos="fade-up">Nouvelle Réclamation</h1>
+            <h2 data-aos="fade-up">Merci de remplir le formulaire ci-dessous</h2>
+        </div>
+
+    <div class="container mt-4" data-aos="fade-up">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                {{ form_start(form) }}
+                <div class="form-group">
+                    {{ form_label(form.type) }}
+                    {{ form_widget(form.type, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.titre_rec) }}
+                    {{ form_widget(form.titre_rec, {'attr': {'class': 'form-control', 'rows': 2}}) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.description) }}
+                    {{ form_widget(form.description, {'attr': {'class': 'form-control', 'rows': 5}}) }}
+                </div>
+                <button type="submit" class="buttonRec">Envoyer</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block About %}{% endblock %}
+{% block WhyUs %}{% endblock %}
+{% block stats %}{% endblock %}
+{% block menu %}{% endblock %}
+{% block testimonial %}{% endblock %}
+{% block events %}{% endblock %}
+{% block booking %}{% endblock %}
+{% block gallery %}{% endblock %}
+{% block contact %}{% endblock %}
+{% block chefs %}{% endblock %}
+
+{% block css %}
+    {{ parent() }}
+    <style>
+        .container.mt-4 {
+            margin-bottom: 50px;
+        }
+        .buttonRec {
+            margin-top: 20px;
+            font-weight: 500;
+            font-size: 14px;
+            letter-spacing: 1px;
+            display: inline-block;
+            padding: 12px 36px;
+            border-radius: 50px;
+            transition: 0.5s;
+            color: #fff;
+            background: var(--color-primary);
+            box-shadow: 0 8px 28px rgba(206, 18, 18, 0.2);
+        }
+        .buttonRec:hover {
+            background: rgba(122, 89, 228, 1);
+            box-shadow: 0 8px 28px rgba(122, 89, 228, 1);
+        }
+        
+    </style>
+{% endblock %}

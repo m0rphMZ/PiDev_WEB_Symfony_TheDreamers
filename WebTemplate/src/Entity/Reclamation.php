@@ -56,14 +56,14 @@ class Reclamation
      *
      * @ORM\Column(name="dateFin", type="date", nullable=true, options={"default"="NULL"})
      */
-    private $dateFin = 'NULL';
+    private $dateFin = null;
 
     /**
      * @var string
      *
      * @ORM\Column(name="status", type="string", length=255, nullable=false, options={"default"="'Open'"})
      */
-    private $status = '\'Open\'';
+    private $status = 'Open';
 
     /**
      * @var \User

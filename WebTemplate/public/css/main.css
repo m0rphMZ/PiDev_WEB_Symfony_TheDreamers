@@ -1484,7 +1484,7 @@ section {
 .hero h2 {
   font-size: 64px;
   font-weight: 700;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   color: var(--color-secondary);
   font-family: var(--font-primary);
 }
@@ -1496,7 +1496,7 @@ section {
 .hero p {
   color: #4f4f5a;
   font-weight: 400;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 }
 
 .hero .btn-book-a-table {
@@ -1641,3 +1641,7 @@ section {
 .footer .credits a {
   color: #fff;
 }
+
+
+
+

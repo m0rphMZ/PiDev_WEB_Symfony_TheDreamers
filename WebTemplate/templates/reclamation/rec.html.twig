@@ -1,43 +1,61 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ReclamationController!{% endblock %}
+{% block title %}Touskieart Support{% endblock %}
 
 {% block hero %}
-    <div class="container">
+    <div class="hero">
+        <div class="container">
+            <h1 data-aos="fade-up">Touskieart - Assitance </h1>
+            <h2 data-aos="fade-up" >En quoi avez-vous besoin d'aide, John {#{{ app.user.username }}#}?</h2>
+        </div>
+ 
+
+    <div class="container mt-4" data-aos="fade-up">
         <div class="row">
             <div class="col-md-12">
-                <h1>List of Reclamations</h1>
-                <hr>
                 {% if reclamations is empty %}
-                    <p>No reclamations found.</p>
+                    <p>Vous n'avez aucune réclamation pour le moment.</p>
+                    <div class="text-right mt-3">
+                                <a href="{{ path('new_reclamation') }}" class="btn-book-a-table">Ajouter une réclamation</a>
+                            </div>
                 {% else %}
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Id Reclamation</th>
-                                <th>Titre</th>
-                                <th>Description</th>
-                                <th>Date</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for reclamation in reclamations %}
-                                <tr>
-                                    <td>{{ reclamation.recId }}</td>
-                                    <td>{{ reclamation.titreRec }}</td>
-                                    <td>{{ reclamation.description }}</td>
-                                    <td>{{ reclamation.dateCreation|date('m/d/Y') }}</td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>Vos réclamations</h5>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Titre</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Créé le</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for reclamation in reclamations %}
+                                        <tr class="reclamation-row" data-href="{{ path('app_reclamation', { 'id': reclamation.recId }) }}">
+                                            <td>{{ reclamation.titreRec }}</td>
+                                            <td>{{ reclamation.status }}</td>
+                                            <td>{{ reclamation.dateCreation|date('m/d/Y') }}</td>
+                                            <td class="text-right">
+                                                <a href="{{ path('app_reclamation', { 'id': reclamation.recId }) }}" class="btn-more-btn">Consulter la Réclamation</a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            <div class="text-right mt-3">
+                                <a href="{{ path('new_reclamation') }}" class="btn-book-a-table">Ajouter une réclamation</a>
+                            </div>
+                        </div>
+                    </div>
                 {% endif %}
-                <a href="{{ path('new_reclamation') }}" class="btn btn-primary">Add Reclamation</a>
             </div>
         </div>
     </div>
 {% endblock %}
-
 
 {% block About %}{% endblock %}
 {% block WhyUs %}{% endblock %}
@@ -48,6 +66,15 @@
 {% block booking %}{% endblock %}
 {% block gallery %}{% endblock %}
 {% block contact %}{% endblock %}
+{% block chefs %}{% endblock %}
 
+{% block css %}
+    {{ parent() }}
+    <style>
+        .container.mt-4 {
+            margin-bottom: 50px;
+        }
+        
 
-
+    </style>
+{% endblock %}
