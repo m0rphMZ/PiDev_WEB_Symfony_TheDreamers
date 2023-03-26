@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Reponses;
+use App\Entity\Reclamation;
+
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -38,14 +40,18 @@ class ReponsesRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-    public function findByRecId(int $rec_id): array
+    public function findResponsesByReclamation(Reclamation $reclamation)
 {
     return $this->createQueryBuilder('r')
-        ->andWhere('r.rec_id = :rec_id')
-        ->setParameter('rec_id', $rec_id)
+        ->andWhere('r.rec = :reclamation')
+        ->setParameter('reclamation', $reclamation)
+        ->orderBy('r.dateRep', 'DESC')
         ->getQuery()
-        ->getResult();
+        ->getResult()
+    ;
 }
+
+
 
 
 
