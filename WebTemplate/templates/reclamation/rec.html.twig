@@ -40,7 +40,7 @@
                                             <td>{{ reclamation.status }}</td>
                                             <td>{{ reclamation.dateCreation|date('m/d/Y') }}</td>
                                             <td class="text-right">
-                                                <a href="{{ path('app_reclamation', { 'id': reclamation.recId }) }}" class="btn-more-btn">Consulter la Réclamation</a>
+                                                <a href="{{ path('show_reclamationById', { 'id': reclamation.recId }) }}" class="btn-more-btn">Consulter la Réclamation</a>
                                             </td>
                                         </tr>
                                     {% endfor %}

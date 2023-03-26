@@ -38,6 +38,21 @@ class ReponsesRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    public function findByRecId(int $rec_id): array
+{
+    return $this->createQueryBuilder('r')
+        ->andWhere('r.rec_id = :rec_id')
+        ->setParameter('rec_id', $rec_id)
+        ->getQuery()
+        ->getResult();
+}
+
+
+
+
+
+
+
 
 //    /**
 //     * @return Reponses[] Returns an array of Reponses objects

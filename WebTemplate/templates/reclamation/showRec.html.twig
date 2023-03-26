@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Touskieart Assistance - {{ reclamation.titreRec }}{% endblock %}
+
+{% block hero %}
+    <div class="hero">
+        <div class="container">
+            <h1 data-aos="fade-up">Touskieart - Assistance</h1>
+            <h2 data-aos="fade-up">Détails de la Réclamation</h2>
+        </div>
+    </div>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-12">
+                <h3>{{ reclamation.titreRec }}</h3>
+                <p>{{ reclamation.description }}</p>
+                <p>Type: {{ reclamation.type }}</p>
+                <p>Date de création: {{ reclamation.dateCreation|date('m/d/Y') }}</p>
+                <p>Status: {{ reclamation.status }}</p>
+                <a href="{{ path('delete_reclamation', { 'id': reclamation.recId }) }}" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette réclamation ?')">Supprimer la Réclamation</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block About %}{% endblock %}
+{% block WhyUs %}{% endblock %}
+{% block stats %}{% endblock %}
+{% block menu %}{% endblock %}
+{% block testimonial %}{% endblock %}
+{% block events %}{% endblock %}
+{% block booking %}{% endblock %}
+{% block gallery %}{% endblock %}
+{% block contact %}{% endblock %}
+{% block chefs %}{% endblock %}
+
+{% block css %}
+    {{ parent() }}
+    <style>
+        .container.mt-4 {
+            margin-bottom: 50px;
+        }
+    </style>
+{% endblock %}

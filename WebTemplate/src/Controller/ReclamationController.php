@@ -33,19 +33,19 @@ class ReclamationController extends AbstractController
         $reclamation = new Reclamation();
         $form = $this->createFormBuilder($reclamation)
             ->add('titre_rec', TextType::class, [
-                'label' => 'Titre de réclamation',
+                'label' => 'Titre de réclamation :',
             ])
             ->add('type', ChoiceType::class, [
-                'label' => 'Type de reclamation',
+                'label' => 'Type de reclamation :',
                 'choices' => [
-                    'User' => 'User',
-                    'Ticket' => 'Ticket',
-                    'Evénement' => 'Evénement',
-                    'Autre aide' => 'Autre aide',
+                    'Un problème avec votre expérience utilisateur' => 'User',
+                    'Un problème avec votre/vos billet(s)' => 'Ticket',
+                    'Un problème avec un événement' => 'Evénement',
+                    'Un autre type daide' => 'Autre aide',
                 ],
             ])
             ->add('description', TextareaType::class, [
-                'label' => 'Décrivez le problème que vous rencontrez',
+                'label' => 'Description :',
             ])
             ->getForm();
 
@@ -67,4 +67,43 @@ class ReclamationController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    #[Route('/reclamation/{id}', name: 'show_reclamationById')]
+        public function show($id): Response
+        {
+            $entityManager = $this->getDoctrine()->getManager();
+            $reclamation = $entityManager->getRepository(Reclamation::class)->find($id);
+
+            if (!$reclamation) {
+                throw $this->createNotFoundException('Reclamation not found');
+            }
+
+            return $this->render('reclamation/showRec.html.twig', [
+                'reclamation' => $reclamation,
+            ]);
+}
+
+
+
+    #[Route('/reclamation/{id}/delete', name: 'delete_reclamation')]
+
+        public function deleteReclamation(Request $request, int $id): Response
+        {
+            $entityManager = $this->getDoctrine()->getManager();
+            $reclamation = $entityManager->getRepository(Reclamation::class)->find($id);
+
+            if (!$reclamation) {
+                throw $this->createNotFoundException(
+                    'No reclamation found for id '.$id
+                );
+            }
+
+            $entityManager->remove($reclamation);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_reclamation');
+        }
+
+
+
 }
