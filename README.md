@@ -2,7 +2,7 @@
 SymfonyPidev3A
 
 
-Asemi el blocks lkol fel Base.html.twig 
+Asemi el blocks lkol fel Base.html.twig :
 
 header
 
@@ -28,3 +28,25 @@ contact
 
 footer
 
+
+
+
+
+
+
+blocks f adminBase.html.twig : 
+
+body
+
+topbar
+
+cards
+
+charts
+
+Project
+
+footer
+
+
+Reference icons fel template admin (https://fontawesomeicons.com)
