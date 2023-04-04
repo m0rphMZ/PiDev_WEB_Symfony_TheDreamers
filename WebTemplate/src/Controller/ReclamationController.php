@@ -12,6 +12,8 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Validator\Constraints\NotBlank;
+
 
 
 class ReclamationController extends AbstractController
@@ -34,6 +36,11 @@ class ReclamationController extends AbstractController
         $form = $this->createFormBuilder($reclamation)
             ->add('titre_rec', TextType::class, [
                 'label' => 'Titre de réclamation :',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Le titre de la réclamation ne doit pas être vide',
+                    ]),
+                ],
             ])
             ->add('type', ChoiceType::class, [
                 'label' => 'Type de reclamation :',

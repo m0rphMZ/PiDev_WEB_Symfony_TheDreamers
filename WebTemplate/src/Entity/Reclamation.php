@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ReclamationRepository;
 use Doctrine\DBAL\Types\Types;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -27,6 +28,7 @@ class Reclamation
      * @var string
      *
      * @ORM\Column(name="titre_rec", type="string", length=255, nullable=false)
+     * @Assert\NotBlank(message="Le titre de la réclamation ne doit pas être vide")
      */
     private $titreRec;
 
@@ -41,6 +43,7 @@ class Reclamation
      * @var string
      *
      * @ORM\Column(name="description", type="text", length=65535, nullable=false)
+     * @Assert\NotBlank(message="Assurez-vous d'écrire une description pour votre réclamation")
      */
     private $description;
 
