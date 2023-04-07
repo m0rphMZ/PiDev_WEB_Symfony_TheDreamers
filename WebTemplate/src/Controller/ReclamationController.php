@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Reclamation;
+use App\Entity\Reponses;
 use App\Entity\User;
+use App\Repository\ReponsesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -75,20 +77,48 @@ class ReclamationController extends AbstractController
         ]);
     }
 
+
     #[Route('/reclamation/{id}', name: 'show_reclamationById')]
-        public function show($id): Response
-        {
+    public function show(Request $request, int $id, ReponsesRepository $reponsesRepository): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $reclamation = $entityManager->getRepository(Reclamation::class)->find($id);
+    
+        if (!$reclamation) {
+            throw $this->createNotFoundException('Reclamation not found');
+        }
+    
+        $reponses = $reponsesRepository->findResponsesByReclamation($reclamation);
+    
+        $reponse = new Reponses();
+        $form = $this->createFormBuilder($reponse)
+            ->add('rep_description', TextareaType::class, [
+                'label' => 'Description :',
+            ])
+            ->getForm();
+    
+        $form->handleRequest($request);
+    
+        if ($form->isSubmitted() && $form->isValid()) {
+            $reponse = $form->getData();
+            $reponse->setDateRep(new \DateTime());
             $entityManager = $this->getDoctrine()->getManager();
-            $reclamation = $entityManager->getRepository(Reclamation::class)->find($id);
-
-            if (!$reclamation) {
-                throw $this->createNotFoundException('Reclamation not found');
-            }
-
-            return $this->render('reclamation/showRec.html.twig', [
-                'reclamation' => $reclamation,
-            ]);
-}
+            $user = $entityManager->getRepository(User::class)->find(10);
+            $reponse->setUser($user);
+            $reponse->setRec($reclamation);
+            $entityManager->persist($reponse);
+            $entityManager->flush();
+    
+            return $this->redirectToRoute('show_reclamationById', ['id' => $reclamation->getRecId()]);
+        }
+    
+        return $this->render('reclamation/showRec.html.twig', [
+            'reclamation' => $reclamation,
+            'reponses' => $reponses,
+            'form' => $form->createView(),
+        ]);
+    }
+    
 
 
 
@@ -110,6 +140,55 @@ class ReclamationController extends AbstractController
 
             return $this->redirectToRoute('app_reclamation');
         }
+
+
+
+
+
+       /* #[Route('/reclamation/{id}/new-response', name: 'new_reponse')]
+            public function newResponse(Request $request, int $id): Response
+            {
+                $entityManager = $this->getDoctrine()->getManager();
+                $reclamation = $entityManager->getRepository(Reclamation::class)->find($id);
+
+                if (!$reclamation) {
+                    throw $this->createNotFoundException('Reclamation not found');
+                }
+
+                $reponse = new Reponses();
+                $form = $this->createFormBuilder($reponse)
+                    ->add('rep_description', TextareaType::class, [
+                        'label' => 'Description :',
+                    ])
+                    ->getForm();
+
+                $form->handleRequest($request);
+
+                if ($form->isSubmitted() && $form->isValid()) {
+                    $reponse = $form->getData();
+                    $reponse->setDateCreation(new \DateTime());
+                    $reponse->setReclamation($reclamation);
+                    $entityManager->persist($reponse);
+                    $entityManager->flush();
+
+                    return $this->redirectToRoute('show_reclamationById', ['id' => $reclamation->getId()]);
+                }
+
+                return $this->render('reclamation/showRec.html.twig', [
+                    'reclamation' => $reclamation,
+                    'form' => $form->createView(),
+                ]);
+            }
+
+            */
+
+
+
+
+
+
+
+
 
 
 

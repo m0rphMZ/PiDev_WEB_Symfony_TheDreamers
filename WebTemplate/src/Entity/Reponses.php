@@ -2,15 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\ReponsesRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Reponses
  *
- * @ORM\Table(name="reponses", indexes={@ORM\Index(name="fk_userid_reponse", columns={"user_id"}), @ORM\Index(name="fk_rec_id_reponse", columns={"rec_id"})})
- * @ORM\Entity(repositoryClass = "App\Repository\ReponsesRepository")
+ * @ORM\Table(name="reponses", indexes={@ORM\Index(name="fk_rec_id_reponse", columns={"rec_id"}), @ORM\Index(name="fk_userid_reponse", columns={"user_id"})})
+ * @ORM\Entity
  */
 class Reponses
 {
@@ -28,7 +27,7 @@ class Reponses
      *
      * @ORM\Column(name="admin_id", type="integer", nullable=true, options={"default"="NULL"})
      */
-    private $adminId = NULL;
+    private $adminId = null;
 
     /**
      * @var string
@@ -45,14 +44,11 @@ class Reponses
     private $dateRep = 'current_timestamp()';
 
     /**
-     * @var \Reclamation
+     * @var bool
      *
-     * @ORM\ManyToOne(targetEntity="Reclamation")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="rec_id", referencedColumnName="rec_id")
-     * })
+     * @ORM\Column(name="isAdminReponse", type="boolean", nullable=false)
      */
-    private $rec;
+    private $isadminreponse = '0';
 
     /**
      * @var \User
@@ -63,6 +59,16 @@ class Reponses
      * })
      */
     private $user;
+
+    /**
+     * @var \Reclamation
+     *
+     * @ORM\ManyToOne(targetEntity="Reclamation")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="rec_id", referencedColumnName="rec_id")
+     * })
+     */
+    private $rec;
 
     public function getRepId(): ?int
     {
@@ -105,14 +111,14 @@ class Reponses
         return $this;
     }
 
-    public function getRec(): ?Reclamation
+    public function isIsadminreponse(): ?bool
     {
-        return $this->rec;
+        return $this->isadminreponse;
     }
 
-    public function setRec(?Reclamation $rec): self
+    public function setIsadminreponse(bool $isadminreponse): self
     {
-        $this->rec = $rec;
+        $this->isadminreponse = $isadminreponse;
 
         return $this;
     }
@@ -125,6 +131,18 @@ class Reponses
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getRec(): ?Reclamation
+    {
+        return $this->rec;
+    }
+
+    public function setRec(?Reclamation $rec): self
+    {
+        $this->rec = $rec;
 
         return $this;
     }

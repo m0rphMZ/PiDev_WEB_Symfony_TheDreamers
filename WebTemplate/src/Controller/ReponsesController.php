@@ -10,15 +10,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ReponsesController extends AbstractController
 {
-    #[Route('/reponses', name: 'app_reponses')]
-    public function index(): Response
-    {
-        return $this->render('reponses/index.html.twig', [
-            'controller_name' => 'ReponsesController',
-        ]);
-    }
 
-    #[Route('/reclamation/{id}/reponses', name: 'reclamation_reponses')]
+    // reponses by their own path //
+    /* #[Route('/reclamation/{id}/reponses', name: 'reclamation_reponses')]      
     public function reclamationReponses(Reclamation $reclamation, ReponsesRepository $reponsesRepository): Response
     {
         $reponses = $reponsesRepository->findResponsesByReclamation($reclamation);
@@ -29,10 +23,7 @@ class ReponsesController extends AbstractController
         ]);
     }
 
-
-
-
-
+    */
 
 
 }
