@@ -1,9 +1,11 @@
-{% extends 'base.html.twig' %}
+{% extends 'adminBase.html.twig' %}
 
 {% block title %}Liste des utilisateurs{% endblock %}
 
 
-{% block  body %}
+
+
+{% block  cards %}
     <h1 class="text-center mb-4">Liste des utilisateurs</h1>
 <a class="btn btn-danger" href="{{ path('app_user_new') }}">ajouter un nouveau utilisateur</a><br><br><br>
     <table class="table table-hover">
@@ -42,6 +44,12 @@
 </center>
         </tbody>
     </table>
-
-    
 {% endblock %}
+
+
+{% block topbar %}{% endblock %}
+
+
+{% block charts %}{% endblock %}
+{% block Project %}{% endblock %}
+{% block footer %}{% endblock %}
