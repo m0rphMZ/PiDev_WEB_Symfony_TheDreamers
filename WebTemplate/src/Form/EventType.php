@@ -43,7 +43,6 @@ class EventType extends AbstractType
                 'attr' => [
                     'class' => 'datepicker'
                 ],
-                'format' => 'yyyy-MM-dd',
             ])
             ->add('enddate')
             ->add('ticketcount', NumberType::class, [
