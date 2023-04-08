@@ -94,6 +94,11 @@ class ReclamationController extends AbstractController
         $form = $this->createFormBuilder($reponse)
             ->add('rep_description', TextareaType::class, [
                 'label' => 'Description :',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez ajouter une description pour votre réponse',
+                    ]),
+                ],
             ])
             ->getForm();
     
@@ -181,6 +186,29 @@ class ReclamationController extends AbstractController
             }
 
             */
+
+
+
+    #[Route('/admin/reclamations', name: 'app_reclamations_admin')]
+    public function indexAdminRec(): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $reclamations = $entityManager->getRepository(Reclamation::class)->findAllReclamations();
+
+        return $this->render('reclamation/adminAllRec.html.twig', [
+            'reclamations' => $reclamations,
+        ]);
+    }
+
+
+
+
+
+
+
+
+
+            
 
 
 

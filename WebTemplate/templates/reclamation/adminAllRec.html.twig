@@ -1,0 +1,74 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block title %}Touskieart Support{% endblock %}
+
+{% block cards %}
+    <div class="hero">
+        <div class="container">
+            <h1 data-aos="fade-up">Touskieart - Assitance </h1>
+            <h2 data-aos="fade-up" >Liste des réclamations</h2>
+        </div>
+    </div>
+
+    <div class="container mt-4" data-aos="fade-up">
+        <div class="row">
+            <div class="col-md-12">
+                {% if reclamations is empty %}
+                    <p>Il n'y a aucune réclamation pour le moment.</p>
+                {% else %}
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>Liste des réclamations</h5>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Titre</th>
+                                        <th scope="col">Type</th>
+                                        <th scope="col">Statut</th>
+                                        <th scope="col">Créé par</th>
+                                        <th scope="col">ID de l'utilisateur</th>
+                                        <th scope="col">Créé le</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for reclamation in reclamations %}
+                                        <tr class="reclamation-row" data-href="{{ path('app_reclamation', { 'id': reclamation.recId }) }}">
+                                            <td>{{ reclamation.recId }}</td>
+                                            <td>{{ reclamation.titreRec }}</td>
+                                            <td>{{ reclamation.type }}</td>
+                                            <td>{{ reclamation.status }}</td>
+                                            <td>{{ reclamation.User.nom }}</td>
+                                            <td>{{ reclamation.User.idUser }}</td>
+                                            <td>{{ reclamation.dateCreation|date('m/d/Y') }}</td>
+                                            <td class="text-right">
+                                                <a href="{{ path('show_reclamationById', { 'id': reclamation.recId }) }}" class="btn-more-btn">Consulter la Réclamation</a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block topbar %}{% endblock %}
+{% block charts %}{% endblock %}
+{% block Project %}{% endblock %}
+{% block footer %}{% endblock %}
+
+{% block css %}
+    {{ parent() }}
+    <style>
+        .container.mt-4 {
+            margin-bottom: 50px;
+        }
+    </style>
+{% endblock %}

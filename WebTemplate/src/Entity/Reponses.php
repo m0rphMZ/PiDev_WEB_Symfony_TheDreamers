@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Reponses
@@ -33,6 +34,7 @@ class Reponses
      * @var string
      *
      * @ORM\Column(name="rep_description", type="text", length=0, nullable=false)
+     * @Assert\NotBlank(message="Veuillez ajouter une description pour votre réclamation")
      */
     private $repDescription;
 

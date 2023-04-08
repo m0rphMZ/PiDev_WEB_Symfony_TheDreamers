@@ -29,11 +29,11 @@
     <div data-aos="fade-up" class="container mt-4">
         <div class="row">
             <div class="col-md-12">
-                <h3>Réclamation Decription:</h3>
+                <h3>Description de la Réclamation :</h3>
                 <p>{{ reclamation.description }}</p>
 
                 {% if reponses|length == 0 %}
-                    <h3>Aucune réponse trouvée pour cette réclamation.</h3>
+                    <h3>En attente de la réponse de l'administrateur...</h3>
                 {% else %}
                     <h3>Réponses:</h3>
                     <div class="card mb-2">
@@ -54,21 +54,24 @@
                 {% endif %}
 
                 {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
-
+                
                 <div class="form-group mt-5">
-                    <h3>Ajouter une réponse:</h3>
-                    <label for="reponse">Saisissez votre réponse ici:</label>
+                    <h3>Mettre à jour le ticket d'assistance :</h3>
+                    <label for="reponse">Envoyer une réponse de suivi :</label>
 
-                    {{ form_widget(form.rep_description, {'attr': {'class': 'form-control', 'placeholder': 'Reponse'}}) }}
+                    {{ form_widget(form.rep_description, {'attr': {'class': 'form-control', 'placeholder': 'Jai des informations supplémentaires sur...'}}) }}
                     <div class="invalid-feedback" style="display: block; color: red;">{{ form_errors(form.rep_description) }}</div>
 
                 </div>
                 
-                <button class="btn btn-primary" type="submit">Envoyer reponse</button>
+                <button class="btn-book-a-table" type="submit">Envoyer reponse</button>
 
-                 {{ form_end(form) }}
+                 
 
-                <a href="{{ path('delete_reclamation', { 'id': reclamation.recId }) }}" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette réclamation ?')">Supprimer la Réclamation</a>
+                <a href="{{ path('delete_reclamation', { 'id': reclamation.recId }) }}" class="btn-book-a-table" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette réclamation ?')">Supprimer la Réclamation</a>
+
+                {{ form_end(form) }}
+
             </div>
         </div>
     </div>
