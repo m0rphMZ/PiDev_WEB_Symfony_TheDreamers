@@ -133,6 +133,16 @@ class UserController extends AbstractController
             $userRepository->remove($user, true);
         }
 
-        return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+        $session = $request->getSession();
+        $user_connected = $session->get('user');
+
+        if($user_connected->getRole()=='Admin'){
+        return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);}
+
+        else {return $this->redirectToRoute('app_login');}
     }
+
+   
+
+
 }
