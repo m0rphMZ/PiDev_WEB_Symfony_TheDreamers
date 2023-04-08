@@ -1,4 +1,5 @@
-{{ form_start(form, {'attr': {'class': 'php-email-form'}}) }}
+<div class="EventFormS">
+{{ form_start(form) }}
     {# {{ form_widget(form) }} #}
 
             
@@ -38,6 +39,8 @@
                 <div class="validate"></div>
               </div>
               
-              <div class="text-center mt-3"><button class="btnS">{{ button_label|default('Save') }}</button></div>
+              <div class="text-center mt-3"><button type="Submit">{{ button_label|default('Save') }}</button></div>
 {{ form_end(form) }}
+
+</div>
           

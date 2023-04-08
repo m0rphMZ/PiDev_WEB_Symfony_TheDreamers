@@ -29,10 +29,12 @@ class EventController extends AbstractController
     public function new(Request $request, EventRepository $eventRepository, SluggerInterface $slugger): Response
     {
         $event = new Event();
+        var_dump($request->request->all());
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            var_dump($request->request->all());
             //Get image path
             $image = $form->get('affiche')->getData();
             if ($image) {

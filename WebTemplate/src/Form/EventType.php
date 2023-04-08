@@ -9,6 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -38,7 +39,12 @@ class EventType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('startdate')
+            ->add('startdate', DateType::class, [
+                'attr' => [
+                    'class' => 'datepicker'
+                ],
+                'format' => 'yyyy-MM-dd',
+            ])
             ->add('enddate')
             ->add('ticketcount', NumberType::class, [
                 'invalid_message' => 'Le nombre des tickets doit être numérique.'])
