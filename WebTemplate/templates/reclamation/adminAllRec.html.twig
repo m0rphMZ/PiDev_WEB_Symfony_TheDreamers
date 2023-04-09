@@ -1,12 +1,61 @@
 {% extends 'adminBase.html.twig' %}
 
+
 {% block title %}Touskieart Support{% endblock %}
 
 {% block cards %}
     <div class="hero">
         <div class="container">
-            <h1 data-aos="fade-up">Touskieart - Assitance </h1>
-            <h2 data-aos="fade-up" >Liste des réclamations</h2>
+            <h1 class="m-0 font-weight-bold text-primary">Touskieart - Assitance </h1>
+            <h2 >Liste des réclamations</h2>
+        </div>
+    </div>
+
+    <div class="container mt-4" data-aos="fade-up">
+        <div class="row">
+            {% if reclamations is empty %}
+    <p>Il n'y a aucune réclamation pour le moment.</p>
+{% else %}
+    <div class="row">
+        {% for reclamation in reclamations %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title"><span class="text-primary">#</span>  {{ reclamation.recId }}</h4>
+                        <h5 class="card-title"><span class="text-primary">Titre :</span><br>  {{ reclamation.titreRec }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted"><span class="text-primary">Type :</span>  {{ reclamation.type }}</h6>
+                        <p class="card-text"> <span class="text-primary">Status :</span> {{ reclamation.status }}</p>
+                        <p class="card-text"><span class="text-primary">Créé par :</span> {{ reclamation.User.nom }}</p>
+                        <p class="card-text"><span class="text-primary">ID de l'utilisateur :</span> {{ reclamation.User.idUser }}</p>
+                        <p class="card-text"><span class="text-primary">Créé le :</span>  {{ reclamation.dateCreation|date('m/d/Y') }}</p>
+                        <a href="{{ path('show_reclamationById_admin', { 'id': reclamation.recId }) }}" class="btn btn-primary">Consulter la Réclamation</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block topbar %}{% endblock %}
+{% block charts %}{% endblock %}
+{% block Project %}{% endblock %}
+{% block footer %}{% endblock %}
+
+
+
+
+
+
+{#
+{% block cards %}
+    <div class="hero">
+        <div class="container">
+            <h1 >Touskieart - Assitance </h1>
+            <h2 >Liste des réclamations</h2>
         </div>
     </div>
 
@@ -45,7 +94,7 @@
                                             <td>{{ reclamation.User.idUser }}</td>
                                             <td>{{ reclamation.dateCreation|date('m/d/Y') }}</td>
                                             <td class="text-right">
-                                                <a href="{{ path('show_reclamationById', { 'id': reclamation.recId }) }}" class="btn-more-btn">Consulter la Réclamation</a>
+                                                <a href="{{ path('show_reclamationById_admin', { 'id': reclamation.recId }) }}" class="btn-more-btn">Consulter la Réclamation</a>
                                             </td>
                                         </tr>
                                     {% endfor %}
@@ -58,17 +107,6 @@
         </div>
     </div>
 {% endblock %}
+#}
 
-{% block topbar %}{% endblock %}
-{% block charts %}{% endblock %}
-{% block Project %}{% endblock %}
-{% block footer %}{% endblock %}
 
-{% block css %}
-    {{ parent() }}
-    <style>
-        .container.mt-4 {
-            margin-bottom: 50px;
-        }
-    </style>
-{% endblock %}

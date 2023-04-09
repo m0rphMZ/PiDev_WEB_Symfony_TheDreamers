@@ -64,9 +64,9 @@ class Reclamation
     /**
      * @var string
      *
-     * @ORM\Column(name="status", type="string", length=255, nullable=false, options={"default"="'Open'"})
+     * @ORM\Column(name="status", type="string", length=255, nullable=false, options={"default"="'Ouvert'"})
      */
-    private $status = 'Open';
+    private $status = 'Ouvert';
 
     /**
      * @var \User

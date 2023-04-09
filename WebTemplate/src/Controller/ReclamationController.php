@@ -200,6 +200,68 @@ class ReclamationController extends AbstractController
         ]);
     }
 
+    #[Route('admin/reclamations/{id}', name: 'show_reclamationById_admin')]
+    public function showRecAdmin(Request $request, int $id, ReponsesRepository $reponsesRepository): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $reclamation = $entityManager->getRepository(Reclamation::class)->find($id);
+    
+        if (!$reclamation) {
+            throw $this->createNotFoundException('Reclamation not found');
+        }
+    
+        $reponses = $reponsesRepository->findResponsesByReclamation($reclamation);
+    
+        $reponse = new Reponses();
+        $form = $this->createFormBuilder($reponse)
+            ->add('rep_description', TextareaType::class, [
+                'label' => 'Description :',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez ajouter une description pour votre réponse',
+                    ]),
+                ],
+            ])
+            ->getForm();
+    
+        $form->handleRequest($request);
+    
+        if ($form->isSubmitted() && $form->isValid()) {
+            $reponse = $form->getData();
+            $reponse->setDateRep(new \DateTime());
+            $entityManager = $this->getDoctrine()->getManager();
+            $user = $entityManager->getRepository(User::class)->find(10);
+            $reponse->setUser($user);
+            $reponse->setRec($reclamation);
+            $reponse->setIsAdminReponse(true);
+            $entityManager->persist($reponse);
+            $entityManager->flush();
+    
+            return $this->redirectToRoute('show_reclamationById_admin', ['id' => $reclamation->getRecId()]);
+        }
+    
+        return $this->render('reclamation/adminShowRec.html.twig', [
+            'reclamation' => $reclamation,
+            'reponses' => $reponses,
+            'form' => $form->createView(),
+        ]);
+    }
+
+
+
+    #[Route('admin/reclamations/{id}/close', name: 'close_reclamation')]
+
+    public function closeReclamation(Reclamation $reclamation): Response
+    {
+        $reclamation->setStatus('Fermée');
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->flush();
+        
+        $this->addFlash('success', 'Reclamation '.$reclamation->getTitreRec().' a été fermée.');
+
+        return $this->redirectToRoute('show_reclamationById_admin', ['id' => $reclamation->getRecId()]);
+    }
+
 
 
 
