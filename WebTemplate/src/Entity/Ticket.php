@@ -3,12 +3,13 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\TicketRepository;
 
 /**
  * Ticket
  *
  * @ORM\Table(name="ticket", indexes={@ORM\Index(name="iduser_foreign", columns={"user_id"}), @ORM\Index(name="event_fk", columns={"event_id"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass = "App\Repository\TicketRepository")
  */
 class Ticket
 {

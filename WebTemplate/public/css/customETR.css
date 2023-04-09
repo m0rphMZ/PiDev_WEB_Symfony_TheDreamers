@@ -104,3 +104,16 @@ Form Code:
     .EventFormS button[type=submit]:hover {
     background: #7A59E4;
     }
+
+    .GBtn {
+        background: var(--color-primary);
+        border: 0;
+        padding: 14px 60px;
+        color: #fff;
+        transition: 0.4s;
+        border-radius: 50px;
+        }
+        
+    .GBtn:hover {
+        background: #7A59E4;
+        }

@@ -3,41 +3,58 @@
 {% block title %}Liste des événements{% endblock %}
 
 {% block body %}
-    <h1>Liste des événements</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Affiche</th>
-                <th>Title</th>
-                <th>Type</th>
-                <th>Startdate</th>
-                <th>Enddate</th>
-                <th>Ticketprice</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for event in events %}
-            <tr>
-                <td><img src="{{ asset('uploads/images/' ~ event.affiche) }}" class="img-fluid" width="200" height="200"></td>
-                <td>{{ event.title }}</td>
-                <td>{{ event.type }}</td>
-                <td>{{ event.startdate ? event.startdate|date('Y-m-d') : '' }}</td>
-                <td>{{ event.enddate ? event.enddate|date('Y-m-d') : '' }}</td>
-                <td>{{ event.ticketprice }}</td>
-                <td>
-                    <a href="{{ path('app_event_show', {'eventId': event.eventId}) }}">show</a>
-                    <a href="{{ path('app_event_edit', {'eventId': event.eventId}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
+    <a href="{{ path('app_event_new') }}" 
+    style="
+        background: var(--color-primary);
+        border: 0;
+        padding: 14px 60px;
+        color: #fff;
+        transition: 0.4s;
+        border-radius: 50px;
+    ">Create new</a>
+
+    <!-- ======= Chefs Section ======= -->
+    <section id="chefs" class="chefs section-bg">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-header">
+          <p>La <span>liste</span> des Evénements</p>
+        </div>
+
+        <div class="row gy-4">
+
+          {% for event in events %}
+          <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+            <div class="chef-member">
+              <div class="member-img">
+                <img src="{{ asset('uploads/images/' ~ event.affiche) }}" class="img-fluid" alt="">
+                <div class="social">
+                  <a href="#"><i class="bi bi-twitter"></i></a>
+                  <a href="#"><i class="bi bi-facebook"></i></a>
+                  <a href="#"><i class="bi bi-instagram"></i></a>
+                  <a href="#"><i class="bi bi-linkedin"></i></a>
+                </div>
+              </div>
+              <div class="member-info">
+                <h4>{{ event.title }}</h4>
+                <span>{{ event.type }}</span>
+                <span>{{ event.startdate ? event.startdate|date('d-m-Y') : '' }} - {{ event.enddate ? event.enddate|date('d-m-Y') : '' }}</span>
+                <p>{{ event.ticketprice }} dt.</p>
+                <a href="{{ path('app_event_show', {'eventId': event.eventId}) }}">Voir plus d'informations</a>
+              </div>
+            </div>
+          </div><!-- End Chefs Member -->
+            {% else %}
             <tr>
                 <td colspan="10">no records found</td>
             </tr>
         {% endfor %}
-        </tbody>
-    </table>
 
-    <a href="{{ path('app_event_new') }}">Create new</a>
+          
+
+        </div>
+
+      </div>
+    </section><!-- End Chefs Section -->
 {% endblock %}
