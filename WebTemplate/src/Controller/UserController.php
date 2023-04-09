@@ -8,7 +8,10 @@ use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
@@ -86,6 +89,32 @@ class UserController extends AbstractController
     public function edit(Request $request, User $user, UserRepository $userRepository,SluggerInterface $slugger): Response
     {
         $form = $this->createForm(UserType::class, $user);
+    
+    $form->remove('mdp');
+    
+    $form->add('mdp', TextType::class);
+
+    $form->remove('image');
+
+    
+        $form->add('image', FileType::class, [
+            'label' => 'image',
+            'mapped' => false,
+            'required' => false,
+            'constraints' => [
+                new File([
+                    'maxSize' => '2M',
+                    'mimeTypes' => [
+                        'image/jpeg',
+                        'image/png',
+                        'image/gif',
+                    ],
+                    'mimeTypesMessage' => 'Veuillez sélectionner une image valide (jpeg, png, gif)',
+                    'maxSizeMessage' => 'La taille de l\'image ne doit pas dépasser 2 Mo.',
+                ]),
+            ],
+        ]);
+   
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -116,8 +145,18 @@ class UserController extends AbstractController
 
 
             $userRepository->save($user, true);
+            $session = $request->getSession();
+            $user_connected = $session->get('user');
+            
 
-            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+            if($user_connected->getRole()=='Admin'){
+                return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);}
+        
+                else {
+                    
+                    
+                    
+                    return $this->redirectToRoute('app_user_show', ['idUser' => $user->getIdUser()]);}
         }
      
         return $this->renderForm('user/edit.html.twig', [
@@ -139,7 +178,7 @@ class UserController extends AbstractController
         if($user_connected->getRole()=='Admin'){
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);}
 
-        else {return $this->redirectToRoute('app_login');}
+        else {return $this->redirectToRoute('app_user_show', ['idUser' => $user_connected->getIdUser()]);}
     }
 
    
