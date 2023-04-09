@@ -3,12 +3,13 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\CommentaireRepository;
 
 /**
  * Commentaire
  *
  * @ORM\Table(name="commentaire", indexes={@ORM\Index(name="fk_user_com", columns={"id_user"}), @ORM\Index(name="fk_user_event", columns={"id_event"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass = "App\Repository\CommentaireRepository")
  */
 class Commentaire
 {
