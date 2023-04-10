@@ -4,6 +4,10 @@
   --font-primary: "Amatic SC", sans-serif;
   --font-secondary: "Inter", sans-serif;
 }
+.montassar{
+  width: 300px;
+  height: 300px;
+}
 
 /* Colors */
 :root {

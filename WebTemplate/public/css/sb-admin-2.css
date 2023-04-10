@@ -46,7 +46,10 @@
 *::after {
   box-sizing: border-box;
 }
-
+.montassar{
+  width: 200px;
+  height: 200px;
+}
 html {
   font-family: sans-serif;
   line-height: 1.15;

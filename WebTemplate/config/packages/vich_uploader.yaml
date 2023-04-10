@@ -1,0 +1,8 @@
+vich_uploader:
+    db_driver: orm
+
+    mappings:
+        product_image:
+            uri_prefix: 'portfolio/'
+            upload_destination: '../public/assets/img/portfolio/'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer

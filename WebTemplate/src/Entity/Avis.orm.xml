@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="App\Entity\Avis" table="avis">
+    <indexes>
+      <index name="fk_prod" columns="idProduit"/>
+    </indexes>
+    <id name="idavis" type="integer" column="idAvis">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="contenu" type="string" column="contenu" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="iduser" type="integer" column="idUser" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <many-to-one field="idproduit" target-entity="Produit" fetch="LAZY">
+      <join-columns>
+        <join-column name="idProduit" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>
