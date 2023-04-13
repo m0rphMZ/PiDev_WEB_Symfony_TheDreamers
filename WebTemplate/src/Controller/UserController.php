@@ -156,7 +156,7 @@ class UserController extends AbstractController
                     
                     
                     
-                    return $this->redirectToRoute('app_user_show', ['idUser' => $user->getIdUser()]);}
+                    return $this->redirectToRoute('app_user_show', ['idUser' => $user_connected->getIdUser()]);}
         }
      
         return $this->renderForm('user/edit.html.twig', [

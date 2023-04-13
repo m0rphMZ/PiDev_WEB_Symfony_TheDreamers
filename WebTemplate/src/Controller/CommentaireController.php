@@ -45,17 +45,18 @@ class CommentaireController extends AbstractController
         $session = $request->getSession();
         $user_connected=$session->get('user');
         $session->set('user', $user_connected);
+        $us=$entityManager->getRepository(User::class)->find($user_connected->getIdUser());
         
         $event=$entityManager->getRepository(Event::class)->find(4);
         
-        $commentaire->setIdUser($user_connected);
+        $commentaire->setIdUser($us);
        $commentaire->setIdEvent($event);
 
         $form = $this->createForm(CommentaireType::class, $commentaire);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($user_connected);
+            
 
 
             $commentaireRepository->save($commentaire, true);

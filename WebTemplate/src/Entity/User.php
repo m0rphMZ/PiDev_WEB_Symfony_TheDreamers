@@ -8,12 +8,16 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * User
  *
  * @ORM\Table(name="user")
- *@ORM\Entity(repositoryClass = "App\Repository\UserRepository") */
+ *@ORM\Entity(repositoryClass = "App\Repository\UserRepository") 
+ */
+
+ 
  
 class User 
 {

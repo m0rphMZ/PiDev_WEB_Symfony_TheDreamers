@@ -109,5 +109,10 @@ class Commentaire
         return $this;
     }
 
+    public function __toString()
+{
+    return (string) $this->getIdUser();
+}
+
 
 }

@@ -3,6 +3,7 @@
 {% block title %}Comments List{% endblock %}
 
 {% block body %}
+<a href="{{ path('app_home') }}" class="btn btn-secondary btn-block mt-3" style="background-color: #dcdcdc; color: black;">Retour</a>
     <h1 class="text-center mb-4">liste des commentaires</h1>
 <center><a href="{{ path('app_commentaire_new') }}" class="btn btn-danger">Ajouter un commentaire</a></center><br>
 {% for commentaire in commentaires %}

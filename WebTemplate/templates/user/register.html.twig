@@ -7,6 +7,7 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                <center> <h1 style="color: #210777;">Inscription</h1></center>
+               
                {{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
                     {{ form_row(form.nom, {'attr': {'class': 'form-control', 'placeholder': 'Nom'}}) }}<br>
                     {{ form_row(form.prenom, {'attr': {'class': 'form-control', 'placeholder': 'Prénom'}}) }}<br>
@@ -21,4 +22,5 @@
             </div>
         </div>
     </div>
+    
 {% endblock %}

@@ -64,18 +64,19 @@ class LoginController extends AbstractController
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
-
+    
         if ($form->isSubmitted() && $form->isValid()) {
-
+    
+         
+    
             $photo = $form->get('image')->getData();
-
-            
+    
             if ($photo) {
                 $originalFilename = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
                 $safeFilename = $slugger->slug($originalFilename);
                 $newFilename = $safeFilename.'-'.uniqid().'.'.$photo->guessExtension();
-
+    
                 // Move the file to the directory where brochures are stored
                 try {
                     $photo->move(
@@ -85,31 +86,25 @@ class LoginController extends AbstractController
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
                 }
-
+    
                 // updates the 'brochureFilename' property to store the PDF file name
                 // instead of its contents
                 $user->setImage($newFilename);
-      }
-
-
-
-
-
-
+            }
+    
             $userRepository->save($user, true);
             $session = $request->getSession();
             $session->set('user', $user);
-
+    
             return $this->redirectToRoute('app_home');
         }
-
+    
         return $this->renderForm('user/register.html.twig', [
             'user' => $user,
             'form' => $form,
         ]);
     }
-
-
+    
 }
 
 
