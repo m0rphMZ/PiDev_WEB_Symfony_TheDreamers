@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
@@ -88,7 +89,23 @@ class UserController extends AbstractController
     #[Route('/{idUser}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user, UserRepository $userRepository,SluggerInterface $slugger): Response
     {
+        $session = $request->getSession();
+        $user_connected = $session->get('user');
         $form = $this->createForm(UserType::class, $user);
+
+        if($user_connected->getRole()=='Admin'){
+
+           $form->add('etat', ChoiceType::class, [
+            'choices' => [
+                'Activé' => 'activé',
+                'Désactivé' => 'désactivé',
+                
+            ],
+            'expanded' => true,
+            'multiple' => false,
+            
+        ]) ;
+        }
     
     $form->remove('mdp');
     
@@ -115,6 +132,8 @@ class UserController extends AbstractController
             ],
         ]);
    
+
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -145,8 +164,7 @@ class UserController extends AbstractController
 
 
             $userRepository->save($user, true);
-            $session = $request->getSession();
-            $user_connected = $session->get('user');
+         
             
 
             if($user_connected->getRole()=='Admin'){

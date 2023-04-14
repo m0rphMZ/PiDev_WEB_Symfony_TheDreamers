@@ -47,10 +47,13 @@ class UserType extends AbstractType
     'choices' => [
         'Artiste' => 'Artiste',
         'Simple Utilisateur' => 'simple utilisateur',
+        
     ],
     'expanded' => true,
     'multiple' => false,
+    
 ])
+
            
         ;
     }

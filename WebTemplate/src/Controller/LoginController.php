@@ -32,7 +32,12 @@ class LoginController extends AbstractController
                 $this->addFlash('error', 'Email ou mot de passe incorrect.');
                 return $this->redirectToRoute('app_login');
             }
+if ($user->getEtat()=="désactivé"){
 
+    $this->addFlash('error', 'compte désactivé');
+    return $this->redirectToRoute('app_login');
+
+}
 
 
             $session = $request->getSession();

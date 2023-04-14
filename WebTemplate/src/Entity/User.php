@@ -93,7 +93,12 @@ class User
     private $role;
 
     
-
+     /**
+     * @var string|null
+     *
+     * @ORM\Column(name="etat", type="string", length=50, nullable=true, options={"default"="activé"})
+     */
+    private $etat = 'activé';
     
 
     public function getIdUser(): ?int
@@ -181,6 +186,18 @@ class User
     public function setRole(string $role): self
     {
         $this->role = $role;
+
+        return $this;
+    }
+
+    public function getEtat(): ?string
+    {
+        return $this->etat;
+    }
+
+    public function setEtat(?string $etat): self
+    {
+        $this->etat = $etat;
 
         return $this;
     }
