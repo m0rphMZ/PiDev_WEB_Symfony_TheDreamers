@@ -29,6 +29,10 @@ class Reclamation
      *
      * @ORM\Column(name="titre_rec", type="string", length=255, nullable=false)
      * @Assert\NotBlank(message="Le titre de la réclamation ne doit pas être vide")
+     *@Assert\Length(
+    *      min = 2,
+    *      minMessage = "La titre doit contenir au moins {{ limit }} caractères."
+    * )
      */
     private $titreRec;
 
@@ -44,6 +48,10 @@ class Reclamation
      *
      * @ORM\Column(name="description", type="text", length=65535, nullable=false)
      * @Assert\NotBlank(message="Assurez-vous d'écrire une description pour votre réclamation")
+     *@Assert\Length(
+    *      min = 10,
+    *      minMessage = "La Description doit contenir au moins {{ limit }} caractères."
+    * )
      */
     private $description;
 

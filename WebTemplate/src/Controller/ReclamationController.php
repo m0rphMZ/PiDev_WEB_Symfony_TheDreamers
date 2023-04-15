@@ -2,19 +2,20 @@
 
 namespace App\Controller;
 
-use App\Entity\Reclamation;
-use App\Entity\Reponses;
 use App\Entity\User;
+use App\Entity\Reponses;
+use App\Entity\Reclamation;
 use App\Repository\ReponsesRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
 
@@ -25,6 +26,7 @@ class ReclamationController extends AbstractController
     {
         $entityManager = $this->getDoctrine()->getManager();
         $reclamations = $entityManager->getRepository(Reclamation::class)->findAllReclamations();
+        
 
         return $this->render('reclamation/rec.html.twig', [
             'reclamations' => $reclamations,
@@ -42,15 +44,29 @@ class ReclamationController extends AbstractController
                     new NotBlank([
                         'message' => 'Le titre de la réclamation ne doit pas être vide',
                     ]),
+                    new Length([
+                        'min' => 5,
+                        'minMessage' => 'Le titre de la réclamation doit avoir au moins {{ limit }} caractères',
+                    ]),
                 ],
             ])
             ->add('type', ChoiceType::class, [
                 'label' => 'Type de reclamation :',
+                'placeholder' => 'Veuillez sélectionner un type de réclamation',
                 'choices' => [
                     'Un problème avec votre expérience utilisateur' => 'User',
                     'Un problème avec votre/vos billet(s)' => 'Ticket',
                     'Un problème avec un événement' => 'Evénement',
                     'Un autre type daide' => 'Autre aide',
+                ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez sélectionner un type de réclamation',
+                    ]),
+                ],
+                'invalid_message' => 'Veuillez sélectionner un type de réclamation',
+                'attr' => [
+                    'onchange' => 'removePlaceholderOption()',
                 ],
             ])
             ->add('description', TextareaType::class, [
@@ -59,6 +75,7 @@ class ReclamationController extends AbstractController
             ->getForm();
 
         $form->handleRequest($request);
+        
 
         if ($form->isSubmitted() && $form->isValid()) {
             $reclamation = $form->getData();
@@ -97,6 +114,10 @@ class ReclamationController extends AbstractController
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Veuillez ajouter une description pour votre réponse',
+                    ]),
+                    new Length([
+                        'min' => 2,
+                        'minMessage' => 'Votre réponse doit avoir au moins {{ limit }} caractères',
                     ]),
                 ],
             ])
@@ -149,46 +170,6 @@ class ReclamationController extends AbstractController
 
 
 
-
-       /* #[Route('/reclamation/{id}/new-response', name: 'new_reponse')]
-            public function newResponse(Request $request, int $id): Response
-            {
-                $entityManager = $this->getDoctrine()->getManager();
-                $reclamation = $entityManager->getRepository(Reclamation::class)->find($id);
-
-                if (!$reclamation) {
-                    throw $this->createNotFoundException('Reclamation not found');
-                }
-
-                $reponse = new Reponses();
-                $form = $this->createFormBuilder($reponse)
-                    ->add('rep_description', TextareaType::class, [
-                        'label' => 'Description :',
-                    ])
-                    ->getForm();
-
-                $form->handleRequest($request);
-
-                if ($form->isSubmitted() && $form->isValid()) {
-                    $reponse = $form->getData();
-                    $reponse->setDateCreation(new \DateTime());
-                    $reponse->setReclamation($reclamation);
-                    $entityManager->persist($reponse);
-                    $entityManager->flush();
-
-                    return $this->redirectToRoute('show_reclamationById', ['id' => $reclamation->getId()]);
-                }
-
-                return $this->render('reclamation/showRec.html.twig', [
-                    'reclamation' => $reclamation,
-                    'form' => $form->createView(),
-                ]);
-            }
-
-            */
-
-
-
     #[Route('/admin/reclamations', name: 'app_reclamations_admin')]
     public function indexAdminRec(): Response
     {
@@ -219,6 +200,10 @@ class ReclamationController extends AbstractController
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Veuillez ajouter une description pour votre réponse',
+                    ]),
+                    new Length([
+                        'min' => 2,
+                        'minMessage' => 'Votre réponse d\'administrateur doit avoir au moins {{ limit }} caractères',
                     ]),
                 ],
             ])
@@ -254,6 +239,7 @@ class ReclamationController extends AbstractController
     public function closeReclamation(Reclamation $reclamation): Response
     {
         $reclamation->setStatus('Fermée');
+        $reclamation->setDateFin(new \DateTime());
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->flush();
         
@@ -261,25 +247,6 @@ class ReclamationController extends AbstractController
 
         return $this->redirectToRoute('show_reclamationById_admin', ['id' => $reclamation->getRecId()]);
     }
-
-
-
-
-
-
-
-
-
-            
-
-
-
-
-
-
-
-
-
 
 
 }

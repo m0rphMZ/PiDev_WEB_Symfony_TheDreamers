@@ -11,16 +11,25 @@
                     <h2 data-aos="fade-up">Détails de la Réclamation</h2>
                 </div>
                 <div class="col-md-4 text-right">
-                    <p class="font-weight-bold text-info text-uppercase mb-1">Status:</p>
-                    {% if reclamation.status == 'Ouvert' %}
-                        <p class="text-primary">{{ reclamation.status }}</p>
-                    {% elseif reclamation.status == 'Fermée' %}
-                        <p class="text-success">{{ reclamation.status }}</p>
-                    {% else %}
-                        <p class="text-danger">{{ reclamation.status }}</p>
-                    {% endif %}
+                    <p class="font-weight-bold">Etat:</p>
+                        {% if reclamation.status == 'Ouvert' %}
+                            {% if reponses|length > 0 %}
+                                <p class="text-warning">En Cours</p>
+                            {% else %}
+                                <p class="text-primary">Aucune réponse</p>
+                            {% endif %}
+                        {% elseif reclamation.status == 'Fermée' %}
+                            <p class="text-success">{{ reclamation.status }}</p>
+                        {% else %}
+                            <p class="text-danger">{{ reclamation.status }}</p>
+                        {% endif %}
+
                     <p class="font-weight-bold text-info text-uppercase mb-1">Date de création:</p>
                     <p>{{ reclamation.dateCreation|date('m/d/Y') }}</p>
+                    {% if reclamation.dateFin is not null %}
+                        <p class="font-weight-bold text-danger text-uppercase mb-1">Date de fin:</p>
+                        <p class="text-danger">{{ reclamation.dateFin|date('m/d/Y') }}</p>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -33,8 +42,14 @@
                 <p>{{ reclamation.description }}</p>
 
                 {% if reponses|length == 0 %}
-                    <h3>En attente de votre réponse...</h3>
+                        {% if reclamation.status == 'Fermée' %}
+                            <h3>Aucune réponse trouvée</h3>
                 {% else %}
+                        <h3 class="font-weight-bold text-info text-uppercase mb-1">Réponses:</h3>
+                        <h3>En attente de votre réponse...</h3>
+
+                    {% endif %}
+                    {% else %}
                     <h3 class="font-weight-bold text-info text-uppercase mb-1">Réponses:</h3>
                     <div class="card mb-2">
                         {% for reponse in reponses %}

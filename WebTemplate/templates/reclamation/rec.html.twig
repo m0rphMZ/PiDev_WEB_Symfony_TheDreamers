@@ -7,7 +7,11 @@
     <div class="hero">
         <div class="container">
             <h1 data-aos="fade-up">Touskieart - Assitance </h1>
+            {% if reclamations is empty %}
+            <h2 data-aos="fade-up" >En quoi avez-vous besoin d'aide ?</h2>
+            {% else %}
             <h2 data-aos="fade-up" >En quoi avez-vous besoin d'aide, {{reclamation.User.nom}} {#{{ app.user.username }}#}?</h2>
+            {% endif %}
         </div>
  
 

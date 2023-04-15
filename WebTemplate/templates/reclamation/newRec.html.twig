@@ -29,7 +29,7 @@
                     </div>
                     <div class="form-group mt-3">
                         {{ form_widget(form.type, {'attr': {'class': 'form-control'}}) }}
-                        {{ form_errors(form.type) }}
+                        <div class="invalid-feedback" style="display: block; color: red;">{{ form_errors(form.type) }}</div>
                     </div>
                     <div class="form-group mt-3">
                         {{ form_widget(form.description, {'attr': {'class': 'form-control', 'rows': '5', 'placeholder': 'Veuillez décrire en détail votre réclamation ici'}}) }}
@@ -98,5 +98,16 @@
             color: #fff;
         }
     </style>
+
+    <script type="text/javascript">
+    function removePlaceholderOption() {
+        var selectElement = document.getElementById("form_type");
+        if (selectElement.options[0].value === "") {
+            selectElement.removeChild(selectElement.options[0]);
+        }
+    }
+</script>
 {% endblock %}
+
+
 
