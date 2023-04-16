@@ -22,16 +22,45 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ReclamationController extends AbstractController
 {
     #[Route('/reclamation', name: 'app_reclamation')]
-    public function index(): Response
-    {
-        $entityManager = $this->getDoctrine()->getManager();
-        $reclamations = $entityManager->getRepository(Reclamation::class)->findAllReclamations();
-        
+        public function index(Request $request): Response
+        {
+            $entityManager = $this->getDoctrine()->getManager();
 
-        return $this->render('reclamation/rec.html.twig', [
-            'reclamations' => $reclamations,
-        ]);
-    }
+            // Create the status filter form
+            $form = $this->createFormBuilder()
+                ->add('status', ChoiceType::class, [
+                    'choices' => [
+                        'Tous les Reclamations' => '',
+                        'Reclamation(s) Ouverte' => 'Ouvert',
+                        'Reclamation(s) Fermée' => 'Fermée',
+                    ],
+                    'required' => false,
+                    'placeholder' => false,
+                ])
+                ->getForm();
+
+            $form->handleRequest($request);
+
+            $statusFilter = null;
+
+            if ($form->isSubmitted() && $form->get('status')->getData() !== '') {
+                $statusFilter = $form->get('status')->getData();
+            }
+
+            // Get the reclamations based on the selected status filter
+            if ($statusFilter === null) {
+                $reclamations = $entityManager->getRepository(Reclamation::class)->findAllReclamations();
+            } else {
+                $reclamations = $entityManager->getRepository(Reclamation::class)->findReclamationsByStatus($statusFilter);
+            }
+
+            return $this->render('reclamation/rec.html.twig', [
+                'reclamations' => $reclamations,
+                'statusFilterForm' => $form->createView(),
+            ]);
+        }
+
+
 
     #[Route('/reclamation/new', name: 'new_reclamation')]
     public function new(Request $request): Response

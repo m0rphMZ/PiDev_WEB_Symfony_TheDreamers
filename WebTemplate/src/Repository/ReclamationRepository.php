@@ -55,6 +55,16 @@ class ReclamationRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findReclamationsByStatus($status)
+{
+    $qb = $this->createQueryBuilder('r')
+        ->where('r.status = :status')
+        ->setParameter('status', $status)
+        ->orderBy('r.dateCreation', 'DESC');
+
+    return $qb->getQuery()->getResult();
+}
+
 
 
 
