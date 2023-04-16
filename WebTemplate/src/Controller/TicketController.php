@@ -109,7 +109,8 @@ class TicketController extends AbstractController
             'ticket' => $ticket,
         ]);
     }
-
+	
+	//ticket edit
     #[Route('/ticket/{ticketId}/edit', name: 'app_ticket_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Ticket $ticket, TicketRepository $ticketRepository, EventRepository $eventRepository): Response
     {
@@ -146,7 +147,8 @@ class TicketController extends AbstractController
             'form' => $form,
         ]);
     }
-
+	
+	//Ticket delete
     #[Route('/ticket/{ticketId}', name: 'app_ticket_delete', methods: ['POST'])]
     public function delete(Request $request, Ticket $ticket, EntityManagerInterface $entityManager): Response
     {

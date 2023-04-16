@@ -227,7 +227,8 @@ class EventController extends AbstractController
             'event' => $event,
         ]);
     }
-
+	
+	//Admin edit
     #[Route('/admin/{eventId}/edit', name: 'app_event_edit_admin', methods: ['GET', 'POST'])]
     public function adminEdit(Request $request, Event $event, EventRepository $eventRepository, SluggerInterface $slugger): Response
     {
@@ -285,7 +286,8 @@ class EventController extends AbstractController
             'form' => $form,
         ]);
     }
-
+	
+	//Admin Delete
     #[Route('/admin/{eventId}', name: 'app_event_delete_admin', methods: ['POST'])]
     public function adminDelete(Request $request, Event $event, EventRepository $eventRepository): Response
     {
