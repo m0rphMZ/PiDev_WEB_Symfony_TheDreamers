@@ -1,8 +1,11 @@
+
+
+
 {% extends 'base.html.twig' %}
 
 {% block title %}Edit User{% endblock %}
 
-{% block body %}
+{% block hero %}
  {% if app.session.get('user').role =='Admin' %}
 <a href="{{ path('app_user_index') }}" class="btn btn-primary" style="background-color: #ee568e; border: none; color: #fff;">retour</a>
 {% else %}
@@ -19,3 +22,16 @@
     {{ include('user/_delete_form.html.twig') }}
     </center>
 {% endblock %}
+
+{% block About %}{% endblock %}
+{% block header %}{% endblock %}
+{% block WhyUs %}{% endblock %}
+{% block stats %}{% endblock %}
+{% block menu %}{% endblock %}
+{% block testimonial %}{% endblock %}
+{% block events %}{% endblock %}
+{% block booking %}{% endblock %}
+{% block gallery %}{% endblock %}
+{% block contact %}{% endblock %}
+{% block chefs %}{% endblock %}
+{% block footer %}{% endblock %}

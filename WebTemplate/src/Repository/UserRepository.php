@@ -74,4 +74,28 @@ public function findOneByEmail(string $email): ?User
 }
 
 
+
+public function findBySearchQuery(string $searchQuery): array
+{
+    $queryBuilder = $this->createQueryBuilder('u')
+        ->where('u.email LIKE :searchQuery')
+        ->orWhere('u.nom LIKE :searchQuery')
+        ->orWhere('u.prenom LIKE :searchQuery')
+        ->setParameter('searchQuery', '%' . $searchQuery . '%')
+        ->getQuery();
+
+    return $queryBuilder->getResult();
+}
+
+
+public function findByRole(string $role): array
+{
+    $queryBuilder = $this->createQueryBuilder('u')
+        ->where('u.role LIKE :role')
+        ->setParameter('role', '%' . $role . '%')
+        ->getQuery();
+
+    return $queryBuilder->getResult();
+}
+
 }

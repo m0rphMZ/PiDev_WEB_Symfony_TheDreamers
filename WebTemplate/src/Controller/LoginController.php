@@ -3,15 +3,18 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\UserType;
 use App\Form\LoginFormType;
+use App\Service\MailerService;
+use Symfony\Component\Mime\Email;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use App\Form\UserType;
 
 class LoginController extends AbstractController
 {
@@ -64,7 +67,7 @@ if ($user->getEtat()=="désactivé"){
     }
    
     #[Route('/register', name: 'app_user_register', methods: ['GET', 'POST'])]
-    public function new(Request $request, UserRepository $userRepository , SluggerInterface $slugger): Response
+    public function new(Request $request, UserRepository $userRepository , SluggerInterface $slugger,MailerService $mailer): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -100,6 +103,14 @@ if ($user->getEtat()=="désactivé"){
             $userRepository->save($user, true);
             $session = $request->getSession();
             $session->set('user', $user);
+
+            $to = $user->getEmail();
+            $subject = 'Confirmation d\'inscription';
+            $body = '<p>Bonjour ' . $user->getNom() . ',</p><p>Merci de vous être inscrit sur notre site.</p>';
+            $mailer->sendEmail("hmaidi185@gmail.com", $subject, $body);
+
+       
+
     
             return $this->redirectToRoute('app_home');
         }

@@ -2,7 +2,7 @@
 
 {% block title %}Profile{% endblock %}
 
-{% block body %}
+{% block hero %}
 <div class="container-fluid" style="background-image: url('{{ asset('uploads/images/Background.png') }}'); background-size: cover; background-position: center center; min-height: 100vh;">
 {% if app.session.get('user').role == 'Admin' %}
 <a href="{{ path('app_user_index') }}"class="btn btn-primary mt-3" style="background-color: #210777; border: none; color: #fff;">Retour à la liste</a>
@@ -63,3 +63,15 @@
     </div>
 </div>
 {% endblock %}
+
+{% block About %}{% endblock %}
+{% block WhyUs %}{% endblock %}
+{% block stats %}{% endblock %}
+{% block menu %}{% endblock %}
+{% block testimonial %}{% endblock %}
+{% block events %}{% endblock %}
+{% block booking %}{% endblock %}
+{% block gallery %}{% endblock %}
+{% block contact %}{% endblock %}
+{% block chefs %}{% endblock %}
+{% block footer %}{% endblock %}

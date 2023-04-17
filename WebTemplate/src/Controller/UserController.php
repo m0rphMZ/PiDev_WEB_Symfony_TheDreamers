@@ -196,7 +196,7 @@ class UserController extends AbstractController
         if($user_connected->getRole()=='Admin'){
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);}
 
-        else {return $this->redirectToRoute('app_user_show', ['idUser' => $user_connected->getIdUser()]);}
+        else {return $this->redirectToRoute('app_logout');}
     }
 
    
