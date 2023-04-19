@@ -81,10 +81,16 @@
                                             </td>
                                         </tr>
                                     {% endfor %}
+                                    
                                 </tbody>
                             </table>
                             <div class="text-right mt-3">
                                 <a href="{{ path('new_reclamation') }}" class="btn-book-a-table">Ajouter une réclamation</a>
+                                {% if reclamations|length > 0 %}
+                                        <div class="d-flex justify-content-center my-4">
+                                            {{ knp_pagination_render(reclamations, 'pagination.html.twig') }}
+                                        </div>
+                                    {% endif %}
                             </div>
                         </div>
                     </div>
