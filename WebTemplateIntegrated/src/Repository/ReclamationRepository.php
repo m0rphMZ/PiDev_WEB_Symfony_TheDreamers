@@ -68,6 +68,45 @@ class ReclamationRepository extends ServiceEntityRepository
     }
     
 
+    public function searchReclamations(string $searchTerm, int $userId): array
+            {
+                $qb = $this->createQueryBuilder('r')
+                    ->where('r.user = :userId')
+                    ->andWhere('r.titreRec LIKE :searchTerm OR r.type LIKE :searchTerm OR r.description LIKE :searchTerm OR r.dateCreation LIKE :searchTerm OR r.dateFin LIKE :searchTerm')
+                    ->setParameter('userId', $userId)
+                    ->setParameter('searchTerm', '%' . $searchTerm . '%')
+                    ->orderBy('r.dateCreation', 'DESC');
+
+                return $qb->getQuery()->getResult();
+            }
+
+
+
+
+
+
+
+            public function findAllReclamationsBySearchTerm($searchTerm)
+{
+    $queryBuilder = $this->createQueryBuilder('r')
+        ->leftJoin('r.user', 'u')
+        ->where('r.description LIKE :searchTerm')
+        ->orWhere('r.status LIKE :searchTerm')
+        ->orWhere('r.type LIKE :searchTerm')
+        ->orWhere('r.dateCreation LIKE :searchTerm')
+        ->orWhere('r.dateFin LIKE :searchTerm')
+        ->orWhere('u.nom LIKE :searchTerm')
+        ->orWhere('u.prenom LIKE :searchTerm')
+        ->orWhere('u.email LIKE :searchTerm')
+        ->setParameter('searchTerm', '%'.$searchTerm.'%');
+
+    return $queryBuilder->getQuery()->getResult();
+}
+
+            
+
+
+
 
 
 

@@ -7,6 +7,7 @@ use App\Entity\Reponses;
 use App\Entity\Reclamation;
 use Symfony\Component\Mime\Email;
 use App\Repository\ReponsesRepository;
+use App\Repository\ReclamationRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
@@ -75,6 +76,74 @@ class ReclamationController extends AbstractController
             'statusFilterForm' => $form->createView(),
         ]);
     }
+
+
+
+
+
+
+
+
+    #[Route('/reclamation/search', name: 'app_reclamation_search')]
+public function search(Request $request, ReclamationRepository $reclamationRepository, PaginatorInterface $paginator): Response
+{
+    $term = $request->query->get('q');
+    $session = $request->getSession();
+    $userId = $session->get('user')->getIdUser();
+
+    $reclamations = $reclamationRepository->searchReclamations($term, $userId);
+
+    $pagination = $paginator->paginate(
+        $reclamations,
+        $request->query->getInt('page', 1),
+        3
+    );
+
+    // Create the status filter form
+    $statusFilterForm = $this->createFormBuilder()
+        ->add('status', ChoiceType::class, [
+            'choices' => [
+                'Tous les Reclamations' => '',
+                'Reclamation(s) Ouverte' => 'Ouvert',
+                'Reclamation(s) Fermée' => 'Fermée',
+            ],
+            'required' => false,
+            'placeholder' => false,
+        ])
+        ->getForm();
+
+    return $this->render('reclamation/rec.html.twig', [
+        'reclamations' => $pagination,
+        'statusFilterForm' => $statusFilterForm->createView(),
+    ]);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -245,6 +314,27 @@ class ReclamationController extends AbstractController
                 'reclamations' => $pagination,
             ]);
         }
+
+
+
+        #[Route('/admin/reclamations/search', name: 'app_reclamations_admin_search')]
+            public function indexAdminRecSearch(Request $request, PaginatorInterface $paginator, ReclamationRepository $reclamationRepository): Response
+            {
+                $term = $request->query->get('q');
+
+                $queryBuilder = $reclamationRepository->findAllReclamationsBySearchTerm($term);
+
+                $pagination = $paginator->paginate(
+                    $queryBuilder,
+                    $request->query->getInt('page', 1),
+                    3 // number of items per page
+                );
+
+                return $this->render('reclamation/adminAllRec.html.twig', [
+                    'reclamations' => $pagination,
+                ]);
+            }
+
         
 
 

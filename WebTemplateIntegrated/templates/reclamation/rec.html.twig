@@ -12,7 +12,24 @@
             {% else %}
             <h2 data-aos="fade-up" >En quoi avez-vous besoin d'aide, {{reclamation.User.nom}} {#{{ app.user.username }}#}?</h2>
             {% endif %}
-        </div>
+
+            <form class="form-inline" data-aos="fade-up" method="get" action="{{ path('app_reclamation_search') }}">
+                <div class="input-group">
+                    <input type="text" name="q" value="{{ app.request.get('q') }}" class="form-control" placeholder="Recherche...">
+                    <input type="hidden" name="search" value="1">
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-search fa-sm"></i></button>
+                    </span>
+                </div>
+            </form>
+
+
+
+
+            </div>
+
+         
+        
  
 
     <div class="container mt-4" data-aos="fade-up">
@@ -111,15 +128,18 @@
 {% block contact %}{% endblock %}
 {% block chefs %}{% endblock %}
 
+
 {% block css %}
     {{ parent() }}
     <style>
-        .container.mt-4 {
-            margin-bottom: 50px;
-        }
-        
+        .btn-primary {
+    background-color: #EE568E;
+    border-color: #EE568E;
+}
+.btn-primary:hover {
+    background-color: #e54d7d;
+    border-color: #e54d7d;
+}
 
     </style>
-
-
 {% endblock %}
