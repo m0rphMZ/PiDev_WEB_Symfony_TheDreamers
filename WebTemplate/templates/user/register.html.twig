@@ -16,6 +16,7 @@
                     {{ form_row(form.tel, {'attr': {'class': 'form-control', 'placeholder': 'Téléphone'}}) }}<br>
                     {{ form_row(form.image, {'attr': {'class': 'form-control-file'}}) }}<br>
                     {{ form_row(form.role, {'attr': {'class': 'form-control'}}) }}<br>
+                    {{ form_widget(form._token) }} {# Ajoutez cette ligne pour inclure le jeton CSRF #}
                     <center><button class="btn btn-primary" style="background-color: #ee568e; border: none; color: #fff;">{{ button_label|default('Ajouter') }}</button></center><br>
                 <center><a href="{{ path('app_login') }}" class="btn btn-primary" style="background-color: #ee568e; border: none; color: #fff;">Retour</a></center>
             </div>
@@ -25,8 +26,9 @@
 {% endblock %}
 
 
+
 {% block About %}{% endblock %}
-{% block header %}{% endblock %}
+
 {% block WhyUs %}{% endblock %}
 {% block stats %}{% endblock %}
 {% block menu %}{% endblock %}

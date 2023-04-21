@@ -16,6 +16,8 @@
       <a href="{{ path('app_rech_art', {'role': 'Artiste'}) }}" class="btn btn-primary">Artiste</a>
        <a href="{{ path('app_rech_art', {'role': 'simple utilisateur'}) }}" class="btn btn-primary">simple utilisateur</a></center></div><br>
 
+       
+
 
     
     <table class="table table-hover">
@@ -53,7 +55,12 @@
             </center>
         </tbody>
     </table>
-
+    
+{% if users|length > 0 %}
+                                        <div class="d-flex justify-content-center my-4">
+                                            {{ knp_pagination_render(users) }}
+                                        </div>
+                                    {% endif %}
 {% endblock %}
 
 {% block charts %}{% endblock %}

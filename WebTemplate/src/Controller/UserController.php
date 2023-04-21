@@ -5,6 +5,9 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,10 +23,19 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 class UserController extends AbstractController
 {
     #[Route('/', name: 'app_user_index', methods: ['GET'])]
-    public function index(UserRepository $userRepository): Response
+    public function index(Request $request,UserRepository $userRepository,PaginatorInterface $paginator): Response
     {
+$users= $userRepository->findAll();
+
+$pagination = $paginator->paginate(
+    $users,
+    $request->query->getInt('page', 1),
+    4
+);
+
+
         return $this->render('user/index.html.twig', [
-            'users' => $userRepository->findAll(),
+            'users' => $pagination,
         ]);
     }
 
@@ -199,6 +211,10 @@ class UserController extends AbstractController
         else {return $this->redirectToRoute('app_logout');}
     }
 
+
+
+
+   
    
 
 

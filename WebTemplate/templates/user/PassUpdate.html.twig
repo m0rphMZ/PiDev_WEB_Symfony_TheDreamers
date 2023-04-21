@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}changement de mot de passe{% endblock %}
+
 {% block hero %}
     <div class="container">
         <div class="row justify-content-center">
@@ -9,41 +11,38 @@
                         <div class="row justify-content-center mb-4">
                             <img src="{{ asset('img/logo.png') }}" alt="Logo" class="img-fluid w-50">
                         </div>
-                        <h1 class="text-center mb-4">Se connecter</h1>
+                        <h1 class="text-center mb-4">Changement de mot de passe</h1>
 
                         {{ form_start(form) }}
 
                         <div class="form-group">
-                            {{ form_label(form.email, 'Adresse e-mail') }}
-                            {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                           
+                            {{ form_widget(form.pass1, {'attr': {'class': 'form-control'}}) }}
                         </div>
 
-                        <div class="form-group">
-                            {{ form_label(form.Password, 'Mot de passe') }}
-                            {{ form_widget(form.Password, {'attr': {'class': 'form-control'}}) }}
+                         <div class="form-group"><br>
+                        
+                            {{ form_widget(form.pass2, {'attr': {'class': 'form-control'}}) }}
                         </div>
 
                         <div class="text-center mt-3">
-    <a href="{{ path('app_user_register') }}" class="btn btn-outline-secondary btn-sm">S'inscrire</a>
-    <button type="submit" class="btn btn-outline-secondary btn-sm" style="background-color: #ee568e;">Se connecter</button>
-</div>
+                            <button type="submit" class="btn btn-outline-secondary btn-sm" style="background-color: #ee568e;">Envoyer</button>
+                        </div>
+
+                        
+
                         {{ form_end(form) }}
 
                         {% for flash_message in app.flashes('error') %}
                             <div class="alert alert-danger mt-3">{{ flash_message }}</div>
                         {% endfor %}
-
                         
                     </div>
-                </div>
-                <div class="text-center mt-3">
-                    <a href={{ path('EmailVerif')}}>Mot de passe oublié ?</a>
                 </div>
             </div>
         </div>
     </div>
 {% endblock %}
-
 
 {% block About %}{% endblock %}
 {% block header %}{% endblock %}

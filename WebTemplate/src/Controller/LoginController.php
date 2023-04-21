@@ -61,13 +61,15 @@ if ($user->getEtat()=="désactivé"){
     public function logout(Request $request,UserRepository $repo): Response
     {
 
+        
+
         return $this->redirectToRoute('app_login');
 
         return $this->render('user/login.html.twig', []);  
     }
    
     #[Route('/register', name: 'app_user_register', methods: ['GET', 'POST'])]
-    public function new(Request $request, UserRepository $userRepository , SluggerInterface $slugger,MailerService $mailer): Response
+    public function new(Request $request, UserRepository $userRepository , SluggerInterface $slugger): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -100,14 +102,15 @@ if ($user->getEtat()=="désactivé"){
                 $user->setImage($newFilename);
             }
     
+            
             $userRepository->save($user, true);
             $session = $request->getSession();
             $session->set('user', $user);
 
-            $to = $user->getEmail();
-            $subject = 'Confirmation d\'inscription';
-            $body = '<p>Bonjour ' . $user->getNom() . ',</p><p>Merci de vous être inscrit sur notre site.</p>';
-            $mailer->sendEmail("hmaidi185@gmail.com", $subject, $body);
+
+            
+
+            
 
        
 
