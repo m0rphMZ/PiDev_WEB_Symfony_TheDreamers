@@ -2,7 +2,7 @@
 
 {% block title %}mes Commandes!{% endblock %}
 
-{% block body %}
+{% block hero %}
 
     <section class="h-100 gradient-custom">
         {% for message in app.flashes('success') %}
@@ -73,12 +73,11 @@
                                               action="{{ path('app_commande_delete_front', {'idC': commande.idC}) }}">
                                             <input type="hidden" name="_token"
                                                    value="{{ csrf_token('delete' ~ commande.idC) }}">
-                                            <button class="btn btn-danger">delete</button>
+                                            
                                         </form>
                                         <a class="btn btn-warning"
                                            href="{{ path('app_commande_item_index_commande_front', {'idC': commande.idC}) }}">items</a>
-                                        <a class="btn btn-warning"
-                                           href="{{ path('app_livraison_invoive', {'id': commande.idC}) }}">PDF</a>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -98,3 +97,13 @@
         </div>
     </section>
 {% endblock %}
+{% block About %}{% endblock %}
+{% block WhyUs %}{% endblock %}
+{% block stats %}{% endblock %}
+{% block menu %}{% endblock %}
+{% block testimonial %}{% endblock %}
+{% block events %}{% endblock %}
+{% block booking %}{% endblock %}
+{% block gallery %}{% endblock %}
+{% block contact %}{% endblock %}
+{% block chefs %}{% endblock %}

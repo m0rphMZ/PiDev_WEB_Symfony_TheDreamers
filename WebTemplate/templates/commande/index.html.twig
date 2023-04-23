@@ -3,7 +3,14 @@
 {% block title %}Les Commandes{% endblock %}
 
 {% block cards %}
-    
+    <div style="    display: flex;
+    justify-content: space-between;">
+        <a href="{{ path('app_commande_new', {'idC':app.request.get('idC')}) }}" class="btn btn-primary">ajout</a>
+        <form action="" method="get">
+            <input type="text" name="rechercheString" placeholder="recherche(statue)">
+            <button class="btn btn-dark" type="submit">Rechercher</button>
+        </form>
+    </div>
     <table class="table">
         <thead>
         <tr>

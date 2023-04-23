@@ -58,6 +58,14 @@ class Livraison
     private $email;
 
     /**
+     * @ORM\Column(type="string", length=8)
+     * @Assert\NotBlank (message="ce champ est obligatoire")
+     * @Assert\Email(message="numero valid")
+     * @Groups("post:read")
+     */
+    private $numtel;
+
+    /**
      * @ORM\Column(type="float")
      */
     private $prix = 7;
@@ -124,6 +132,18 @@ class Livraison
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getNumtel(): ?string
+    {
+        return $this->numtel;
+    }
+
+    public function setNumtel(string $numtel): self
+    {
+        $this->numtel = $numtel;
 
         return $this;
     }
