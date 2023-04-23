@@ -80,7 +80,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Choisissez-en un:</h6>
                         <a class="collapse-item" href={{path ('app_reclamations_admin')}}>Reclamations</a>
-                        <a class="collapse-item" href="{{ asset('adminfiles/cards.html') }}">Statistiques</a>
+                        <a class="collapse-item" href={{path ('app_admin_reclamations_statistics')}}>Statistiques</a>
                     </div>
                 </div>
             </li>
@@ -866,6 +866,7 @@
         </div>
     </div>
 
+{% block javascripts %}
     <!-- Bootstrap core JavaScript-->
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -882,6 +883,7 @@
     <!-- Page level custom scripts -->
     <script src="{{ asset('js/demo/chart-area-demo.js') }}"></script>
     <script src="{{ asset('js/demo/chart-pie-demo.js') }}"></script>
+    {% endblock %}
 
 </body>
 
