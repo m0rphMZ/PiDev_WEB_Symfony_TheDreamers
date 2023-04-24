@@ -240,3 +240,13 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 });
+$.ajax({
+  url: 'produit/search',
+  method: 'GET',
+  data: {
+      q: 'CodeProduit'
+  },
+  success: function(response) {
+      console.log(response);
+  }
+});

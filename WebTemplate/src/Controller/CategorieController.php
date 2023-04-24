@@ -21,7 +21,7 @@ class CategorieController extends AbstractController
             ->findAll();
 
         return $this->render('categorie/index.html.twig', [
-            'categories' => $categories,
+            'categories' => $categories, 
         ]);
     }
 

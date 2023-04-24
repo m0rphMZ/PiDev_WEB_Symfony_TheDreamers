@@ -1,3 +1,9 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+# search:
+#     path: /search
+#     controller: App\Controller\DefaultController::searchAction
+# generate_pdf:
+#     path: /produit/pdf
+#     controller: App\Controller\ProduitController::generatePdfAction

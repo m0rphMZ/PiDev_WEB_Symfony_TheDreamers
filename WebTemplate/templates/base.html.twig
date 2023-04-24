@@ -801,7 +801,7 @@
 
 
 
-
+{% block chef %}
     <!-- ======= Chefs Section ======= -->
     <section id="chefs" class="chefs section-bg">
       <div class="container" data-aos="fade-up">
@@ -875,6 +875,7 @@
       </div>
     </section><!-- End Chefs Section -->
 
+ {% endblock %}
 
 
 
@@ -1157,12 +1158,31 @@
 
   {% block js %}
   <!-- Vendor JS Files -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ asset('vendor/aos/aos.js') }}"></script>
   <script src="{{ asset('vendor/glightbox/js/glightbox.min.js') }}"></script>
   <script src="{{ asset('vendor/purecounter/purecounter_vanilla.js') }}"></script>
   <script src="{{ asset('vendor/swiper/swiper-bundle.min.js') }}"></script>
   <script src="{{ asset('vendor/php-email-form/validate.js') }}"></script>
+  <script src="{{asset('js/search.js')}} "></script>
+  <script src="{{asset('js/main.js')}} "></script>
+  <script src="{{asset('js/jquery-3.6.4.js')}} "></script>
+    <script src="{{asset('js/jquery.meanmenu.min.js')}}"></script>
+    <script src="{{asset('js/wow.min.js')}}"></script>
+    <script src="{{asset('js/aos.js')}}"></script>
+    <script src="{{asset('js/jquery.lettering.js')}}"></script>
+    <script src="{{asset('js/jquery.textillate.js')}}"></script>  
+    <script src="{{asset('js/jquery.odometer.min.js')}}"></script>
+    <script src="{{asset('js/jquery.appear.js')}}"></script>
+    <script src="{{asset('js/owl.carousel.min.js')}}"></script>
+    <script src="{{asset('js/jquery.countdown.min.js')}}"></script>
+    <script src="{{asset('js/jquery.scrollUp.min.js')}}"></script>
+    <script src="{{asset('js/imagesloaded.pkgd.min.js')}}"></script>
+    <script src="{{asset('js/jquery.magnific-popup.min.js')}}"></script>
+  <script language="JavaScript" type="text/javascript" src="/js/jquery-1.2.6.min.js"></script>
+<script language="JavaScript" type="text/javascript" src="/js/jquery-ui-personalized-1.5.2.packed.js"></script>
+<script language="JavaScript" type="text/javascript" src="/js/sprinkle.js"></script>
 
   <!-- Template Main JS File -->
   <script src="{{ asset('js/main.js') }}"></script>

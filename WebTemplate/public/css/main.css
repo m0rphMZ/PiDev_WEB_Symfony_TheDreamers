@@ -9,6 +9,7 @@
   height: 300px;
 }
 
+
 /* Colors */
 :root {
   --color-default: #210777;
@@ -20,6 +21,8 @@
 :root {
   scroll-behavior: smooth;
 }
+
+
 
 /*--------------------------------------------------------------
 # General
@@ -39,6 +42,31 @@ a:hover {
   text-decoration: none;
 }
 
+.collection-filter__toolbar-controls__button {
+  border: 1px solid grey;
+  border-radius: 3px;
+  color: grey;
+  display: inline-block;
+  font-size: 13px;
+  font-weight: bold;
+  padding: 12px;
+  text-transform: uppercase;
+  float: left;
+}
+
+.collection-filter__sort-select-filter {
+  -webkit-appearance: menulist-button;
+  -moz-appearance: menulist-button;
+  -ms-appearance: menulist-button;
+  -o-appearance: menulist-button;
+  appearance: menulist-button;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 62px;
+  opacity: .001;
+  height: 42px;
+}
 h1,
 h2,
 h3,
@@ -1265,7 +1293,15 @@ section {
   padding: 12px 15px;
 }
 
-.book-a-table .php-email-form button[type=submit] {
+.book-a-table .php-email-form button {
+  background: var(--color-primary);
+  border: 0;
+  padding: 14px 60px;
+  color: #fff;
+  transition: 0.4s;
+  border-radius: 50px;
+}
+.book-a-table .php-email-form1 button {
   background: var(--color-primary);
   border: 0;
   padding: 14px 60px;
@@ -1274,7 +1310,7 @@ section {
   border-radius: 50px;
 }
 
-.book-a-table .php-email-form button[type=submit]:hover {
+.book-a-table .php-email-form button:hover {
   background: #7A59E4;
 }
 
