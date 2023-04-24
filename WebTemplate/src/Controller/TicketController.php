@@ -14,6 +14,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+//QRCode & PDF Bundle:
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Writer\PngWriter;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
+use Nucleos\DompdfBundle\Wrapper\DompdfWrapperInterface;
+use Endroid\QrCodeBundle\Response\QrCodeResponse;
+
 
 class TicketController extends AbstractController
 {   
@@ -61,7 +68,17 @@ class TicketController extends AbstractController
             $ticket->setPrice($event->getTicketprice());
 
             // Generate QR Code
-            $ticket->setQrcodeimg("qrCodePlaceholderPath");
+            // $writer = new PngWriter();
+            // $qrCode = QrCode::create('https://www.binaryboxtuts.com/'); // You can use any unique string as the content of the QR code
+            // $qrCode->setSize(300);
+            // $qrCode->setMargin(10);
+            // $qrCodePath = '/img/qrCode'.$ticket->getTicketId().'.png'; // Replace with the path where you want to save the QR code
+            // $result = $writer->write($qrCode);
+            // $writer->validateResult($result, 'Life is too short to be generating QR codes');
+            // $result->saveToFile(__DIR__.'/qrcode.png');
+            // $ticket->setQrcodeimg($qrCodePath);
+            
+            $ticket->setQrcodeimg("qr code img path");
 
             // Save Ticket
             $ticketRepository->save($ticket, true);
@@ -110,7 +127,7 @@ class TicketController extends AbstractController
         ]);
     }
 	
-	//ticket edit
+	
     #[Route('/ticket/{ticketId}/edit', name: 'app_ticket_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Ticket $ticket, TicketRepository $ticketRepository, EventRepository $eventRepository): Response
     {
@@ -148,7 +165,7 @@ class TicketController extends AbstractController
         ]);
     }
 	
-	//Ticket delete
+	
     #[Route('/ticket/{ticketId}', name: 'app_ticket_delete', methods: ['POST'])]
     public function delete(Request $request, Ticket $ticket, EntityManagerInterface $entityManager): Response
     {
@@ -159,4 +176,27 @@ class TicketController extends AbstractController
 
         return $this->redirectToRoute('app_ticket_index_admin', [], Response::HTTP_SEE_OTHER);
     }
+
+    //PDF Bundle Code
+    #[Route('/ticket/print/{ticketId}', name: 'app_ticket_print')]
+    public function printAction(Ticket $ticket, DompdfWrapperInterface $dompdfWrapper)
+    {
+        
+        $html = $this->renderView('ticket/print.html.twig', array(
+            'ticket' => $ticket
+        ));
+        $response = $dompdfWrapper->getStreamResponse($html, "document.pdf");
+        $response->headers->set('Content-Type', 'application/pdf');
+
+    return $response;
+    }
+
+    //QRCode Generator:
+    public function qrCodeAction()
+{
+    $text = 'https://example.com';
+    $qrCode = $this->get('endroid.qr_code')->create($text);
+
+    return new QrCodeResponse($qrCode);
+}
 }

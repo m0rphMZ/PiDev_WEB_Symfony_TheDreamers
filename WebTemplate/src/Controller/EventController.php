@@ -15,15 +15,57 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 
 #[Route('/event')]
 class EventController extends AbstractController
 {
     #[Route('/', name: 'app_event_index', methods: ['GET'])]
-    public function index(EventRepository $eventRepository): Response
+    public function index(Request $request, EventRepository $eventRepository): Response
     {
+        //Advanced Search Criterias:
+        $criteria = [
+            'title' => $request->query->get('title'),
+            'type' => $request->query->get('type'),
+            'startDate' => $request->query->get('startDate'),
+            'endDate' => $request->query->get('endDate'),
+            'minPrice' => $request->query->get('minPrice'),
+            'maxPrice' => $request->query->get('maxPrice'),
+        ];
+
+        //Advanced Sort Criterias:
+        $sortOptions = [
+            'title_asc' => 'e.title',
+            'type_asc' => 'e.type',
+            'startdate' => 'e.startdate',
+            'enddate' => 'e.enddate',
+            'ticketprice' => 'e.ticketprice',
+        ];
+        $sort = $request->query->get('sort');
+        if (isset($sortOptions[$sort])) {
+            $sortCriteria = $sortOptions[$sort];
+        } else {
+            $sortCriteria = 'e.title'; // default sorting
+        }
+
+        $orderOptions = [
+            'asc' => 'asc',
+            'desc' => 'desc',
+        ];
+        $order = $request->query->get('order') ?? 'asc';
+
+        if ($criteria) {
+            $events = $eventRepository->search($criteria, $sortCriteria, $order);
+        } else {
+            $events = $eventRepository->findAll();
+        }
         return $this->render('event/index.html.twig', [
-            'events' => $eventRepository->findAll(),
+            'events' => $events,
+            'criteria' => $criteria,
+            'sort' => $sort,
         ]);
     }
 
@@ -162,10 +204,49 @@ class EventController extends AbstractController
     //===========    Admin CRUD:
     //===============================
     #[Route('/admin/index', name: 'app_event_index_admin', methods: ['GET'])]
-    public function adminIndex(EventRepository $eventRepository): Response
+    public function adminIndex(Request $request, EventRepository $eventRepository): Response
     {
+
+        //Advanced Search Criterias:
+        $criteria = [
+            'title' => $request->query->get('title'),
+            'type' => $request->query->get('type'),
+            'startDate' => $request->query->get('startDate'),
+            'endDate' => $request->query->get('endDate'),
+            'minPrice' => $request->query->get('minPrice'),
+            'maxPrice' => $request->query->get('maxPrice'),
+        ];
+
+        //Advanced Sort Criterias:
+        $sortOptions = [
+            'title_asc' => 'e.title',
+            'type_asc' => 'e.type',
+            'startdate' => 'e.startdate',
+            'enddate' => 'e.enddate',
+            'ticketprice' => 'e.ticketprice',
+        ];
+        $sort = $request->query->get('sort');
+        if (isset($sortOptions[$sort])) {
+            $sortCriteria = $sortOptions[$sort];
+        } else {
+            $sortCriteria = 'e.title'; // default sorting
+        }
+
+        $orderOptions = [
+            'asc' => 'asc',
+            'desc' => 'desc',
+        ];
+        $order = $request->query->get('order') ?? 'asc';
+
+        if ($criteria) {
+            $events = $eventRepository->search($criteria, $sortCriteria, $order);
+        } else {
+            $events = $eventRepository->findAll();
+        }
         return $this->render('event/admin/index.html.twig', [
-            'events' => $eventRepository->findAll(),
+            'events' => $events,
+            'criteria' => $criteria,
+            'sort' => $sort,
         ]);
     }
 
@@ -296,5 +377,17 @@ class EventController extends AbstractController
         }
 
         return $this->redirectToRoute('app_event_index_admin', [], Response::HTTP_SEE_OTHER);
+    }
+
+    
+    #[Route('/admin/index', name: 'searchEventx')]
+    public function searchEventx(Request $request, NormalizerInterface $Normalizer, EventRepository $er)
+    {
+        $repository=$this->getDoctrine()->getRepository (Event::class);
+        $requestString=$request->get('searchValue');
+        $events = $er->findEventByTitle($requestString);
+        $jsonContent = $Normalizer->normalize($events, 'json', ['groups' => 'events']);
+        $retour=json_encode($jsonContent);
+        return new Response($retour);
     }
 }

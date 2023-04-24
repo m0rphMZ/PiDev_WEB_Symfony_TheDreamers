@@ -27,7 +27,7 @@
                 <td>{{ ticket.event.enddate|date('d-m-Y') }}</td>
                 <td>{{ ticket.qrcodeimg }}</td>
                 <td>
-                    <a href="#">Print</a>
+                    <a href="{{ path('app_ticket_print', {'ticketId': ticket.ticketId}) }}">Print Ticket</a>
                 </td>
             </tr>
         {% else %}
