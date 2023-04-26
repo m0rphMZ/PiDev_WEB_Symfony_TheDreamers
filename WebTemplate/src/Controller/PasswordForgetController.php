@@ -155,7 +155,7 @@ return $this->render('user/code.html.twig', [
 public function PassUpdate(Request $request, UserRepository $repo, SessionInterface $session)
 {
 
-    $user = new User();
+    
 
 
 $formBuilder = $this->createFormBuilder();
@@ -169,9 +169,9 @@ $formBuilder
         'attr' => ['placeholder' => 'Confirmation mot de passe']
     ]);
 
-
+    $entityManager = $this->getDoctrine()->getManager();
     $user=$session->get('user');
-
+    $user = $this->getDoctrine()->getRepository(User::class)->find($user->getIdUser());
 
 $form = $formBuilder->getForm();
 
@@ -192,9 +192,12 @@ if ($form->isSubmitted() && $form->isValid()) {
 
 
     else {
+        
 
 $user->setMdp($pass1);
-$repo->save($user,true);
+/*$repo->save($user,true);*/
+$entityManager->flush();
+
 $session->set('user', $user);
 
 return $this->redirectToRoute('app_home');
