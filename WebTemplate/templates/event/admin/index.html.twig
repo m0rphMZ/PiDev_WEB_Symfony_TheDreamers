@@ -129,6 +129,12 @@
         <tbody id="searchtab"></tbody>
     </table>
 
+    {% if events|length > 0 %}
+        <div class="d-flex justify-content-center my-4">
+            {{ knp_pagination_render(events) }}
+        </div>
+    {% endif %}
+
     <a href="{{ path('app_event_new_admin') }}">Create new</a>
 
 {# ========== Advanced Search Toggle =========== #}

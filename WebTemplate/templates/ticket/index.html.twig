@@ -38,5 +38,11 @@
         </tbody>
     </table>
 
+    {% if tickets|length > 0 %}
+        <div class="d-flex justify-content-center my-4">
+            {{ knp_pagination_render(tickets) }}
+        </div>
+    {% endif %}
+
     {# <a href="{{ path('app_ticket_new') }}">Create new</a> #}
 {% endblock %}

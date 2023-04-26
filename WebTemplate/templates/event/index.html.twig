@@ -144,6 +144,12 @@
       </div>
     </section><!-- End Chefs Section -->
 
+    {% if events|length > 0 %}
+        <div class="d-flex justify-content-center my-4">
+            {{ knp_pagination_render(events) }}
+        </div>
+    {% endif %}
+
     {# ========== Advanced Search Toggle =========== #}
 <script>
     const advancedSearchToggle = document.getElementById('advancedSearchToggle');

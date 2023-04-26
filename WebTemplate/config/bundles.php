@@ -18,4 +18,5 @@ return [
     Knp\Bundle\SnappyBundle\KnpSnappyBundle::class => ['all' => true],
     Nucleos\DompdfBundle\NucleosDompdfBundle::class => ['all' => true],
     Skies\QRcodeBundle\SkiesQRcodeBundle::class => ['all' => true],
+    Knp\Bundle\PaginatorBundle\KnpPaginatorBundle::class => ['all' => true],
 ];

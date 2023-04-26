@@ -14,40 +14,54 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-//QRCode & PDF Bundle:
+//QRCode & PDF & Pagination Bundle:
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Writer\PngWriter;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Nucleos\DompdfBundle\Wrapper\DompdfWrapperInterface;
 use Endroid\QrCodeBundle\Response\QrCodeResponse;
+use Knp\Component\Pager\PaginatorInterface;
 
 
 class TicketController extends AbstractController
 {   
     //User ticket list:
     #[Route('/ticket', name: 'app_ticket_index', methods: ['GET'])]
-    public function index(EntityManagerInterface $entityManager): Response
+    public function index(Request $request, EntityManagerInterface $entityManager, PaginatorInterface $paginator): Response
     {   
         $user = $entityManager->getRepository(User::class)->find(1);
         $tickets = $entityManager
             ->getRepository(Ticket::class)
             ->findBy(['user' => $user]);
 
+            $pagination = $paginator->paginate(
+                $tickets,
+                $request->query->getInt('page', 1),
+                4
+            );
+
         return $this->render('ticket/index.html.twig', [
-            'tickets' => $tickets,
+            'tickets' => $pagination,
         ]);
+
     }
 
     //Admin Ticket List:
     #[Route('/admin/ticketindex', name: 'app_ticket_index_admin', methods: ['GET'])]
-    public function adminIndex(EntityManagerInterface $entityManager): Response
+    public function adminIndex(Request $request, EntityManagerInterface $entityManager, PaginatorInterface $paginator): Response
     {
         $tickets = $entityManager
             ->getRepository(Ticket::class)
             ->findAll();
 
+            $pagination = $paginator->paginate(
+                $tickets,
+                $request->query->getInt('page', 1),
+                4
+            );
+
         return $this->render('ticket/admin_index.html.twig', [
-            'tickets' => $tickets,
+            'tickets' => $pagination,
         ]);
     }
 

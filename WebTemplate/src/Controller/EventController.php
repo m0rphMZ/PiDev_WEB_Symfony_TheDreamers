@@ -18,13 +18,14 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Knp\Component\Pager\PaginatorInterface;
 
 
 #[Route('/event')]
 class EventController extends AbstractController
 {
     #[Route('/', name: 'app_event_index', methods: ['GET'])]
-    public function index(Request $request, EventRepository $eventRepository): Response
+    public function index(Request $request, PaginatorInterface $paginator, EventRepository $eventRepository): Response
     {
         //Advanced Search Criterias:
         $criteria = [
@@ -62,8 +63,15 @@ class EventController extends AbstractController
         } else {
             $events = $eventRepository->findAll();
         }
+
+        $pagination = $paginator->paginate(
+            $events,
+            $request->query->getInt('page', 1),
+            4
+        );
+
         return $this->render('event/index.html.twig', [
-            'events' => $events,
+            'events' => $pagination,
             'criteria' => $criteria,
             'sort' => $sort,
         ]);
@@ -204,7 +212,7 @@ class EventController extends AbstractController
     //===========    Admin CRUD:
     //===============================
     #[Route('/admin/index', name: 'app_event_index_admin', methods: ['GET'])]
-    public function adminIndex(Request $request, EventRepository $eventRepository): Response
+    public function adminIndex(Request $request, PaginatorInterface $paginator, EventRepository $eventRepository): Response
     {
 
         //Advanced Search Criterias:
@@ -243,8 +251,14 @@ class EventController extends AbstractController
         } else {
             $events = $eventRepository->findAll();
         }
+
+        $pagination = $paginator->paginate(
+            $events,
+            $request->query->getInt('page', 1),
+            4
+        );
         return $this->render('event/admin/index.html.twig', [
-            'events' => $events,
+            'events' => $pagination,
             'criteria' => $criteria,
             'sort' => $sort,
         ]);
