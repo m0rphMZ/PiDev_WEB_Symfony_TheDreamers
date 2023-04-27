@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Comments List{% endblock %}
+
+{% block hero %}
+<br><br><br>
+<a href="{{ path('app_home') }}" class="btn btn-secondary btn-block mt-3" style="background-color: #dcdcdc; color: black;">Retour</a>
+    <h1 class="text-center mb-4">liste des commentaires</h1>
+<center><a href="{{ path('app_commentaire_new') }}" class="btn btn-danger">Ajouter un commentaire</a></center><br>
+{% for commentaire in commentaires %}
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card shadow-sm">
+            <div class="card-body" style="background-color: #ffe5ec;">
+                <p class="card-text"><strong>{{ commentaire.user.nom }}</strong></p><br>
+                <p class="card-text">{{ commentaire.commentaire.commentaire }}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                        <a href="{{ path('app_commentaire_edit', {'idCom': commentaire.commentaire.idCom}) }}" class="btn btn-sm btn-outline-secondary">Modifier</a>
+                        {{ include('commentaire/_delete_form.html.twig') }}
+                    </div>
+                    <small class="text-muted">{{ commentaire.commentaire.likecount }} Likes</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+    <p>Vide</p>
+{% endfor %}
+
+
+   
+{% endblock %}
+{% block About %}{% endblock %}
+
+{% block WhyUs %}{% endblock %}
+{% block stats %}{% endblock %}
+{% block menu %}{% endblock %}
+{% block testimonial %}{% endblock %}
+{% block events %}{% endblock %}
+{% block booking %}{% endblock %}
+{% block gallery %}{% endblock %}
+{% block contact %}{% endblock %}
+{% block chefs %}{% endblock %}
+{% block footer %}{% endblock %}
