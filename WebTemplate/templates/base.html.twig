@@ -9,10 +9,18 @@
   <meta content="" name="description">
   <meta content="" name="keywords">
 
-  {% block css%}
+   {% block css%}
   <!-- Favicons -->
   <link href="{{ asset('img/favicon.png') }}" rel="icon">
   <link href="{{ asset('img/apple-touch-icon.png') }}" rel="apple-touch-icon">
+
+  <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,6 +36,7 @@
 
   <!-- Template Main CSS File -->
   <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+  <link href="{{ asset('css/customETR.css') }}" rel="stylesheet">
   {% endblock %}
 </head>
 <body>
@@ -39,41 +48,46 @@
   <header id="header" class="header fixed-top d-flex align-items-center">
     <div class="container d-flex align-items-center justify-content-between">
 
-      <a href="index.html" class="logo d-flex align-items-center me-auto me-lg-0">  <!-- Nepointi aal path bel name moch path -->
+      <a href={{ path ('app_home') }} class="logo d-flex align-items-center me-auto me-lg-0">  <!-- Nepointi aal path bel name moch path -->
         <!-- Uncomment the line below if you also wish to use an image logo -->
-        <!-- <img src="{{ asset('img/logo.png') }}" alt=""> -->
-        <h1>Touskieart<span>.</span></h1>
+        <img src="{{ asset('img/LogoBlack.png') }}" alt="">
+        <h1>TouskieArt<span>.</span></h1>
       </a>
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a href="#home">Home</a></li>
-          <li><a href="#about">Evenement</a></li>
+          <li><a href={{path ('app_home')}}>Home</a></li>
+          <li><a href={{ path ('app_event_index') }}>Evenement</a></li>
           <li><a href="#menu">Locations</a></li>
-          <li><a href="#events">Produits</a></li>
-          <li><a href="#reclamation">Reclamations</a></li>
-          <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+          <li><a href={{ path ('app_produit_indexF') }}>Produits</a></li>
+          {% if app.session.get('user') is not null %}
+          <li><a href={{path ('app_reclamation')}}>Reclamations</a></li>
+          {% else %}
+          <li><a href={{path ('app_login')}}>Reclamations</a></li>
+          {% endif %}
+     {% if app.session.get('user') is not null %}
+          <li class="dropdown"><a href="#"><span>Bienvenue {{ app.session.get('user').nom }} !</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+            
+            {% else %}
+            <li class="dropdown"><a href="{{ path('app_login') }}"><span>Se connecter</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+
+            {% endif %}
+            {% if app.session.get('user') is not null %}
             <ul>
-              <li><a href="#">Drop Down 1</a></li>
-              <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
-                <ul>
-                  <li><a href="#">Deep Drop Down 1</a></li>
-                  <li><a href="#">Deep Drop Down 2</a></li>
-                  <li><a href="#">Deep Drop Down 3</a></li>
-                  <li><a href="#">Deep Drop Down 4</a></li>
-                  <li><a href="#">Deep Drop Down 5</a></li>
-                </ul>
-              </li>
-              <li><a href="#">Drop Down 2</a></li>
-              <li><a href="#">Drop Down 3</a></li>
-              <li><a href="#">Drop Down 4</a></li>
+             <li><a href="{{ path('app_user_show', {'idUser': app.session.get('user').idUser}) }}">Profile </a></li>
+             
+              <li><a href={{ path ('app_ticket_index') }}>Mes Tickets</a></li>
+              <li><a href={{ path ('mesCommande') }}>Mes commandes</a></li>
+               <li><a href="{{ path('app_logout') }}">Déconnecter</a></li>
             </ul>
+              
+            
+              {% endif %}
           </li>
-          <li><a href="#contact">Contact</a></li>
         </ul>
       </nav><!-- .navbar -->
 
-      <a class="btn-book-a-table" href="#book-a-table">Panier</a>
+      <a class="btn-book-a-table" href={{ path ('cart') }}>Panier</a>
       <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
       <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
 
@@ -796,79 +810,7 @@
 
 
 
-    <!-- ======= Chefs Section ======= -->
-    <section id="chefs" class="chefs section-bg">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-header">
-          <h2>Chefs</h2>
-          <p>Our <span>Proffesional</span> Chefs</p>
-        </div>
-
-        <div class="row gy-4">
-
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
-            <div class="chef-member">
-              <div class="member-img">
-                <img src="{{ asset('img/chefs/chefs-1.jpg') }}" class="img-fluid" alt="">
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-              <div class="member-info">
-                <h4>Walter White</h4>
-                <span>Master Chef</span>
-                <p>Velit aut quia fugit et et. Dolorum ea voluptate vel tempore tenetur ipsa quae aut. Ipsum exercitationem iure minima enim corporis et voluptate.</p>
-              </div>
-            </div>
-          </div><!-- End Chefs Member -->
-
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
-            <div class="chef-member">
-              <div class="member-img">
-                <img src="{{ asset('img/chefs/chefs-2.jpg') }}" class="img-fluid" alt="">
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-              <div class="member-info">
-                <h4>Sarah Jhonson</h4>
-                <span>Patissier</span>
-                <p>Quo esse repellendus quia id. Est eum et accusantium pariatur fugit nihil minima suscipit corporis. Voluptate sed quas reiciendis animi neque sapiente.</p>
-              </div>
-            </div>
-          </div><!-- End Chefs Member -->
-
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="300">
-            <div class="chef-member">
-              <div class="member-img">
-                <img src="{{ asset('img/chefs/chefs-3.jpg') }}" class="img-fluid" alt="">
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-              <div class="member-info">
-                <h4>William Anderson</h4>
-                <span>Cook</span>
-                <p>Vero omnis enim consequatur. Voluptas consectetur unde qui molestiae deserunt. Voluptates enim aut architecto porro aspernatur molestiae modi.</p>
-              </div>
-            </div>
-          </div><!-- End Chefs Member -->
-
-        </div>
-
-      </div>
-    </section><!-- End Chefs Section -->
-
+    
 
 
 
