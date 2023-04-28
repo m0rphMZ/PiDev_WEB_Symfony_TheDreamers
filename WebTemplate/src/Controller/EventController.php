@@ -20,6 +20,9 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Knp\Component\Pager\PaginatorInterface;
 
+//Commentaire Integration step1:
+use App\Controller\CommentaireController;
+
 
 #[Route('/event')]
 class EventController extends AbstractController
@@ -129,10 +132,15 @@ class EventController extends AbstractController
     }
 
     #[Route('/{eventId}', name: 'app_event_show', methods: ['GET'])]
-    public function show(Event $event): Response
+    public function show(Event $event, CommentaireController $commentaireController): Response
     {
+        $commentaireResponse = $commentaireController->forward('App\Controller\CommentaireController::index', [
+            'eventId' => $event->getEventId(),
+        ]);
+
         return $this->render('event/show.html.twig', [
             'event' => $event,
+            'commentaireResponse' => $commentaireResponse->getContent(),
         ]);
     }
 
