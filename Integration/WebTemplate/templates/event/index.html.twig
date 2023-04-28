@@ -3,6 +3,8 @@
 {% block title %}Liste des événements{% endblock %}
 
 {% block body %}
+
+{% if app.session.get('user') is not null %}
 <div>
     <a href="{{ path('app_event_new') }}" 
     style="
@@ -13,6 +15,18 @@
         transition: 0.4s;
         border-radius: 50px;
     ">Create new</a></div>
+    {% else %}
+    <div>
+    <a href="{{ path('app_login') }}" 
+    style="
+        background: var(--color-primary);
+        border: 0;
+        padding: 14px 60px;
+        color: #fff;
+        transition: 0.4s;
+        border-radius: 50px;
+    ">Create new</a></div>
+    {% endif %}
 {# =========== Search Code ================ #}
 <div class="form-group mt-3">
         <input type="checkbox" id="advancedSearchToggle" name="advancedSearch" value="1">
