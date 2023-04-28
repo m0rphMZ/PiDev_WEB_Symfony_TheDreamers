@@ -28,6 +28,8 @@ class Categorie
      */
     private $libcategorie;
 
+  
+
     public function getIdcategorie(): ?int
     {
         return $this->idcategorie;
@@ -43,6 +45,11 @@ class Categorie
         $this->libcategorie = $libcategorie;
 
         return $this;
+    }
+    
+    public function __toString(): string
+    {
+        return $this->getLibcategorie();
     }
 
 

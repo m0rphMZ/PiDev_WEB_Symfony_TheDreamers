@@ -284,6 +284,20 @@
             "./config/packages/security.yaml"
         ]
     },
+    "symfony/swiftmailer-bundle": {
+        "version": "3.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "2.5",
+            "ref": "f0b2fccdca2dfd97dc2fd5ad216d5e27c4f895ac"
+        },
+        "files": [
+            "./config/packages/dev/swiftmailer.yaml",
+            "./config/packages/swiftmailer.yaml",
+            "./config/packages/test/swiftmailer.yaml"
+        ]
+    },
     "symfony/translation": {
         "version": "5.4",
         "recipe": {
@@ -352,6 +366,18 @@
     },
     "twig/extra-bundle": {
         "version": "v3.5.1"
+    },
+    "vich/uploader-bundle": {
+        "version": "2.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "1.13",
+            "ref": "1b3064c2f6b255c2bc2f56461aaeb76b11e07e36"
+        },
+        "files": [
+            "./config/packages/vich_uploader.yaml"
+        ]
     },
     "yellowskies/qr-code-bundle": {
         "version": "1.2.11"

@@ -60,7 +60,7 @@ if ($user->getEtat()=="désactivé"){
 
     
 
-    #[Route('/login', name: 'app_logout')]
+    #[Route('/logout', name: 'app_logout')]
     public function logout(Request $request,UserRepository $repo): Response
     {
 
@@ -68,7 +68,6 @@ if ($user->getEtat()=="désactivé"){
 
         return $this->redirectToRoute('app_login');
 
-        return $this->render('user/login.html.twig', []);  
     }
 
 

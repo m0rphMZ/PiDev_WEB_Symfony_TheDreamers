@@ -20,4 +20,6 @@ return [
     Nucleos\DompdfBundle\NucleosDompdfBundle::class => ['all' => true],
     Symfony\UX\Chartjs\ChartjsBundle::class => ['all' => true],
     Skies\QRcodeBundle\SkiesQRcodeBundle::class => ['all' => true],
+    Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle::class => ['all' => true],
+    Vich\UploaderBundle\VichUploaderBundle::class => ['all' => true],
 ];

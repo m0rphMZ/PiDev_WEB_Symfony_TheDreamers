@@ -1,13 +1,15 @@
 <?php
 
 namespace App\Entity;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Produit
  *
- * @ORM\Table(name="produit")
+ * @ORM\Table(name="produit", indexes={@ORM\Index(name="test", columns={"idcat"})})
  * @ORM\Entity
  */
 class Produit
@@ -77,6 +79,23 @@ class Produit
      */
     private $idcat;
 
+    /**
+     * @Vich\UploadableField(mapping="image", fileNameProperty="imageName")
+     * 
+     * @var File
+     */
+    private $imageFile;  
+    
+
+
+    public function setImageFile(?File $imageFile = null): void
+    {
+        $this->imageFile = $imageFile;
+    }
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
     public function getId(): ?int
     {
         return $this->id;
@@ -177,6 +196,7 @@ class Produit
 
         return $this;
     }
+
 
 
 }

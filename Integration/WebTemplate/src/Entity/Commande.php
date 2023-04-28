@@ -2,223 +2,189 @@
 
 namespace App\Entity;
 
-use Doctrine\DBAL\Types\Types;
+use App\Repository\CommandeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 /**
- * Commande
- *
- * @ORM\Table(name="commande", indexes={@ORM\Index(name="id_user_fk", columns={"id_user"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass=CommandeRepository::class)
  */
 class Commande
 {
+
     /**
-     * @var int
-     *
-     * @ORM\Column(name="commande_id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     * @Groups("post:read")
      */
-    private $commandeId;
+    private $idC;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="date_commande", type="date", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(type="datetime")
+     * @Assert\NotBlank(message="ce chanp est obligatoire")
+     * @Groups("post:read")
      */
-    private $dateCommande = 'CURRENT_TIMESTAMP';
+    private $date;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="rue", type="text", length=65535, nullable=false)
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="ce chanp est obligatoire")
+     * @Groups("post:read")
      */
-    private $rue;
+    private $user;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="ville", type="string", length=11, nullable=false)
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="ce chanp est obligatoire")
+     * @Groups("post:read")
      */
-    private $ville;
+    private $statue = 'pending';
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="code_postal", type="integer", nullable=false)
+     * @ORM\OneToMany(targetEntity=CommandeItem::class, mappedBy="commande")
+     * @Groups("post:read")
      */
-    private $codePostal;
+    private $orderItem;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="tel", type="string", length=8, nullable=false)
+     * @ORM\OneToOne(targetEntity=Livraison::class, mappedBy="commande", cascade={"persist", "remove"})
+     * @Groups("post:read")
      */
-    private $tel;
+    private $livraison;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="nom", type="string", length=255, nullable=false)
+     * @ORM\Column(type="float")
+     * @Groups("post:read")
      */
-    private $nom;
+    private $remise = 0;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="prenom", type="string", length=255, nullable=false)
-     */
-    private $prenom;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id_panier", type="integer", nullable=false)
-     */
-    private $idPanier;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="prix", type="float", precision=10, scale=0, nullable=false)
-     */
-    private $prix;
-
-    /**
-     * @var \User
-     *
-     * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_user", referencedColumnName="id_user")
-     * })
-     */
-    private $idUser;
-
-    public function getCommandeId(): ?int
+    public function __construct()
     {
-        return $this->commandeId;
+
     }
 
-    public function getDateCommande(): ?\DateTimeInterface
+    public function getIdC(): ?int
     {
-        return $this->dateCommande;
+        return $this->idC;
     }
 
-    public function setDateCommande(\DateTimeInterface $dateCommande): self
+    public function setIdC(int $idC): self
     {
-        $this->dateCommande = $dateCommande;
+        $this->idC = $idC;
 
         return $this;
     }
 
-    public function getRue(): ?string
+    public function getDate(): ?\DateTimeInterface
     {
-        return $this->rue;
+        return $this->date;
     }
 
-    public function setRue(string $rue): self
+    public function setDate(\DateTimeInterface $date): self
     {
-        $this->rue = $rue;
+        $this->date = $date;
 
         return $this;
     }
 
-    public function getVille(): ?string
+    public function getUser(): ?string
     {
-        return $this->ville;
+        return $this->user;
     }
 
-    public function setVille(string $ville): self
+    public function setUser(string $user): self
     {
-        $this->ville = $ville;
+        $this->user = $user;
 
         return $this;
     }
 
-    public function getCodePostal(): ?int
+    public function getStatue(): ?string
     {
-        return $this->codePostal;
+        return $this->statue;
     }
 
-    public function setCodePostal(int $codePostal): self
+    public function setStatue(string $statue): self
     {
-        $this->codePostal = $codePostal;
+        $this->statue = $statue;
 
         return $this;
     }
 
-    public function getTel(): ?string
+
+    /**
+     * @return Collection<int, CommandeItem>
+     */
+    public function getOrderItem(): Collection
     {
-        return $this->tel;
+        return $this->orderItem;
     }
 
-    public function setTel(string $tel): self
+    public function addOrderItem(CommandeItem $orderItem): self
     {
-        $this->tel = $tel;
+        if (!$this->orderItem->contains($orderItem)) {
+            $this->orderItem[] = $orderItem;
+            $orderItem->setCommande($this);
+        }
 
         return $this;
     }
 
-    public function getNom(): ?string
+//
+    public function removeOrderItem(CommandeItem $orderItem): self
     {
-        return $this->nom;
-    }
-
-    public function setNom(string $nom): self
-    {
-        $this->nom = $nom;
+        if ($this->orderItem->removeElement($orderItem)) {
+            // set the owning side to null (unless already changed)
+            if ($orderItem->getCommande() === $this) {
+                $orderItem->setCommande(null);
+            }
+        }
 
         return $this;
     }
 
-    public function getPrenom(): ?string
+    public function __toString()
     {
-        return $this->prenom;
+        return $this->getIdC() . "";
     }
 
-    public function setPrenom(string $prenom): self
+    public function getLivraison(): ?Livraison
     {
-        $this->prenom = $prenom;
+        return $this->livraison;
+    }
+
+    public function setLivraison(?Livraison $livraison): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($livraison === null && $this->livraison !== null) {
+            $this->livraison->setCommande(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($livraison !== null && $livraison->getCommande() !== $this) {
+            $livraison->setCommande($this);
+        }
+
+        $this->livraison = $livraison;
 
         return $this;
     }
 
-    public function getIdPanier(): ?int
+    public function getRemise(): ?float
     {
-        return $this->idPanier;
+        return $this->remise;
     }
 
-    public function setIdPanier(int $idPanier): self
+    public function setRemise(float $remise): self
     {
-        $this->idPanier = $idPanier;
+        $this->remise = $remise;
 
         return $this;
     }
-
-    public function getPrix(): ?float
-    {
-        return $this->prix;
-    }
-
-    public function setPrix(float $prix): self
-    {
-        $this->prix = $prix;
-
-        return $this;
-    }
-
-    public function getIdUser(): ?User
-    {
-        return $this->idUser;
-    }
-
-    public function setIdUser(?User $idUser): self
-    {
-        $this->idUser = $idUser;
-
-        return $this;
-    }
-
 
 }
