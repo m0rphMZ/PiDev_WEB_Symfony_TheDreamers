@@ -59,7 +59,7 @@
                                     </div>
                                     <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
                                         {% if commande.livraison is null %}
-                                            <a class="btn btn-success"
+                                            <a class="btn btn-primary" style="background-color: #ee568e; border: none; color: #fff;"
                                                href="{{ path('app_livraison_new', {'idC': commande.idC}) }}">ajout
                                                 livraison</a>
                                         {% else %}
@@ -75,7 +75,7 @@
                                                    value="{{ csrf_token('delete' ~ commande.idC) }}">
                                             
                                         </form>
-                                        <a class="btn btn-warning"
+                                        <a class="btn btn-info" style="background-color: blue; border: none; color: #fff;"
                                            href="{{ path('app_commande_item_index_commande_front', {'idC': commande.idC}) }}">items</a>
                                         
                                     </div>
