@@ -103,6 +103,24 @@
                 </div>
             </li>
 
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href=# data-toggle="collapse" data-target="#collapseFour"
+                    aria-expanded="true" aria-controls="collapseFour">
+                    <i class="fas fa-hands-helping"></i>
+                    <span>Produits et Categorie</span>
+                </a>
+                <div id="collapseFour" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Choisissez-en un:</h6>
+                        <a class="collapse-item" href={{path ('app_produit_new')}}>Produit</a>
+                        <a class="collapse-item" href={{path ('app_categorie_new')}}>Categorie</a>
+                    </div>
+                </div>
+            </li>
+
+
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"

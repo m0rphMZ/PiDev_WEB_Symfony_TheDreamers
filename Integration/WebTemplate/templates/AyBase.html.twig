@@ -35,7 +35,6 @@
 </head>
 <body>
 
-
 {% block header %}
 
   <!-- ======= Header ======= -->
@@ -53,7 +52,7 @@
           <li><a href={{path ('app_home')}}>Home</a></li>
           <li><a href={{ path ('app_event_index') }}>Evenement</a></li>
           <li><a href="#menu">Locations</a></li>
-          <li><a href="#events">Produits</a></li>
+          <li><a href={{ path ('app_produit_indexF') }}>Produits</a></li>
           {% if app.session.get('user') is not null %}
           <li><a href={{path ('app_reclamation')}}>Reclamations</a></li>
           {% else %}
@@ -71,6 +70,7 @@
              <li><a href="{{ path('app_user_show', {'idUser': app.session.get('user').idUser}) }}">Profile </a></li>
              
               <li><a href={{ path ('app_ticket_index') }}>Mes Tickets</a></li>
+              <li><a href={{ path ('mesCommande') }}>Mes commandes</a></li>
                <li><a href="{{ path('app_logout') }}">Déconnecter</a></li>
             </ul>
               
@@ -80,13 +80,20 @@
         </ul>
       </nav><!-- .navbar -->
 
-      <a class="btn-book-a-table" href="#book-a-table">Panier</a>
+
+
+      {% if app.session.get('user') is not null %}
+          <a class="btn-book-a-table" href={{ path ('cart') }}>Panier</a>
+          {% else %}
+         <a class="btn-book-a-table" href={{ path ('app_login') }}>Panier</a>
+          {% endif %}
       <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
       <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
 
     </div>
   </header><!-- End Header -->
   {% endblock %}
+
 
 
 
