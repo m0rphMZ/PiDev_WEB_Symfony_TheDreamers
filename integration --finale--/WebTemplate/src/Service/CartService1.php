@@ -81,15 +81,47 @@ class CartService1
     }
 
 
+    // public function getCurrentOrder(): \App\Entity\Commande
+    // {
+    //     $user_connected = $this->session->get('user');
+    //     $userId = $user_connected->getIdUser();
+    //     return $this->session->get('currentOrder', $this->commandeRepo->findOneBy([
+    //         'user' => $userId
+            
+    //     ]));
+    // }
+
     public function getCurrentOrder(): \App\Entity\Commande
     {
         $user_connected = $this->session->get('user');
         $userId = $user_connected->getIdUser();
-        return $this->session->get('currentOrder', $this->commandeRepo->findOneBy([
+    
+        $commande = $this->commandeRepo->findOneBy([
             'user' => $userId
-            
-        ]));
+        ]);
+    
+        if (!$commande) {
+            // If no command exists for the user, create a new one
+            $commande = new \App\Entity\Commande();
+            $commande->setUser((string) $userId); // Cast the user ID to a string
+            $commande->setDate(new \DateTime());
+            $this->entityManager->persist($commande);
+            $this->entityManager->flush();
+        }
+    
+        $this->session->set('currentOrder', $commande);
+    
+        return $commande;
     }
+    
+
+
+
+
+
+
+
+    
 
     public function getCart(): array
     {

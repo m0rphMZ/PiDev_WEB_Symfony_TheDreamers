@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: May 01, 2023 at 12:42 AM
+-- Generation Time: May 01, 2023 at 01:10 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -72,7 +72,7 @@ INSERT INTO `categorie_loc` (`codeC_loc`, `libelleC_loc`, `color`) VALUES
 
 CREATE TABLE `commande` (
   `id_c` int(11) NOT NULL,
-  `date` datetime NOT NULL,
+  `date` datetime DEFAULT NULL,
   `user` varchar(255) NOT NULL,
   `statue` varchar(255) NOT NULL,
   `remise` double NOT NULL
@@ -83,21 +83,10 @@ CREATE TABLE `commande` (
 --
 
 INSERT INTO `commande` (`id_c`, `date`, `user`, `statue`, `remise`) VALUES
-(20, '2023-04-24 09:19:00', '34', 'placed', 10),
-(21, '2023-04-24 09:19:52', '34', 'approved', 0),
 (23, '2023-04-29 17:54:00', '6', 'approved', 0),
 (24, '2023-04-29 17:54:00', '6', 'approved', 0),
-(25, '2023-04-29 16:23:45', '34', 'pending', 0),
-(26, '2023-04-29 16:30:44', '34', 'pending', 0),
-(27, '2023-04-29 16:30:57', '34', 'pending', 0),
-(28, '2023-04-29 16:31:22', '34', 'pending', 0),
-(29, '2023-04-29 16:32:44', '34', 'pending', 0),
-(30, '2023-04-29 16:35:21', '34', 'pending', 0),
-(31, '2023-04-29 16:36:25', '34', 'pending', 0),
-(32, '2023-04-29 16:38:11', '34', 'pending', 0),
-(33, '2023-04-30 23:57:22', '34', 'pending', 0),
-(34, '2023-05-01 00:06:35', '34', 'pending', 0),
-(35, '2023-05-01 00:24:38', '34', 'pending', 0);
+(38, '2023-05-01 01:06:56', '37', 'pending', 0),
+(39, '2023-05-01 01:08:38', '38', 'pending', 0);
 
 -- --------------------------------------------------------
 
@@ -129,7 +118,8 @@ INSERT INTO `commande_item` (`id`, `produit`, `commande`, `quantity`) VALUES
 (41, 1, 17, 1),
 (42, 1, 18, 1),
 (43, 1, 3, 1),
-(44, 1, 10, 1);
+(44, 1, 10, 1),
+(51, 2, 36, 1);
 
 -- --------------------------------------------------------
 
@@ -433,7 +423,9 @@ INSERT INTO `user` (`id_user`, `nom`, `prenom`, `email`, `mdp`, `tel`, `image`, 
 (31, 'Achref', 'Boussada', 'admin@gmail.com', '123', 12345678, 'imgMe-6449760a87b3c.png', 'Admin', 'activé'),
 (34, 'Mahmoud', 'Mzoughi', 'mahmoudmzoughi@gmail.com', '1234', 12345678, 'imgMe-6449a16cef6bf.png', 'simple utilisateur', 'activé'),
 (35, 'Mehrez', 'Ayo', 'm@m.com', '123', 12345678, 'profile-pic-644eaa72dc72c.jpg', 'simple utilisateur', 'activé'),
-(36, 'sylas', 'garen', 'hmaidi185@gmail.com', 'azerty', 58229725, 'profile-pic-644eaaa92401e.jpg', 'simple utilisateur', 'activé');
+(36, 'sylas', 'garen', 'hmaidi185@gmail.com', 'azerty', 58229725, 'profile-pic-644eaaa92401e.jpg', 'simple utilisateur', 'activé'),
+(37, 'UserNom', 'UserPrenom', 'EmailUser@gmail.com', '123', 12345678, 'imgMe-644eefcd62fae.png', 'Artiste', 'activé'),
+(38, 'NomUser', 'PrnomUser', 'ashrefboussada@gmail.com', '123', 12345678, 'imgMe-644ef4eea71f5.png', 'Artiste', 'activé');
 
 --
 -- Indexes for dumped tables
@@ -597,13 +589,13 @@ ALTER TABLE `categorie`
 -- AUTO_INCREMENT for table `commande`
 --
 ALTER TABLE `commande`
-  MODIFY `id_c` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id_c` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `commande_item`
 --
 ALTER TABLE `commande_item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT for table `commentaire`
@@ -675,7 +667,7 @@ ALTER TABLE `ticket`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- Constraints for dumped tables
