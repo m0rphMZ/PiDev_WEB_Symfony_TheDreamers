@@ -51,7 +51,13 @@
         <ul>
           <li><a href={{path ('app_home')}}>Home</a></li>
           <li><a href={{ path ('app_event_index') }}>Evenement</a></li>
-          <li><a href="#menu">Locations</a></li>
+
+          {% if app.session.get('user') is not null %}
+          <li><a href={{ path ('app_location_indexx') }}>Locations</a></li>
+          {% else %}
+          <li><a href={{ path ('app_login') }}>Locations</a></li>
+          {% endif %}
+
           <li><a href={{ path ('app_produit_indexF') }}>Produits</a></li>
           {% if app.session.get('user') is not null %}
           <li><a href={{path ('app_reclamation')}}>Reclamations</a></li>

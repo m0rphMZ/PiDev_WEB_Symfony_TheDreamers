@@ -52,7 +52,7 @@
                     {% else %}
                     <h3 class="font-weight-bold text-info text-uppercase mb-1">Réponses:</h3>
                     <div class="card mb-2">
-                        {% for reponse in reponses %}
+                        {% for reponse in reponses %} 
                             <div class="card-header">
                                 {% if reponse.isAdminReponse %}
                                     <p class="text-xs font-weight-bold text-info text-uppercase mb-1">Votre réponse d'administrateur :</p>
@@ -89,7 +89,8 @@
                     {% endif %}
                     
                     {% if reclamation.status != 'Fermée' %}
-                        <a href="{{ path('close_reclamation', { 'id': reclamation.recId }) }}" class="btn btn-primary" onclick="return confirm('Voulez-vous vraiment fermer cette réclamation ?')">Fermer la Réclamation</a>
+
+                        <a href="{{ path('close_reclamation', { 'id': reclamation.recId }) }}" class="btn btn-primary" data-toggle="modal" data-target="#closeModal">Fermer la Réclamation</a>
                     {% endif %}
                     
                     {{ form_end(form) }}
@@ -99,6 +100,29 @@
             </div>
         </div>
     </div>
+
+    <!-- Fermer reclamation Modal-->
+    <div class="modal fade" id="closeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Prêt à partir?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Sélectionnez "Déconnexion" ci-dessous si vous êtes prêt à mettre fin à votre session en cours.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+                    <a class="btn btn-primary" href={{ path('close_reclamation', { 'id': reclamation.recId }) }}>Fermer la Réclamation</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 {% endblock %}
 
 

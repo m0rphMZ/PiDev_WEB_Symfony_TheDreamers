@@ -529,37 +529,6 @@ public function sendSlackMessage(ChatterInterface $chatter,LocationRepository $l
 
  
 
-
-
-
-
-/**
-     * @Route("/", name="app_admin_commande", methods={"GET"})
-     */
-  /*  public function index1(Request $request, LocationRepository $LocationRepository, PaginatorInterface $paginator): Response
-    {
-        $rechercheString = $request->query->get('rechercheString');
-
-        if ($rechercheString == null) {
-            $results = $commandeRepository->findAll(); // Remplacez "searchByTitle" par la méthode que vous utilisez pour rechercher les cours
-
-        } else {
-            $results = $LocationRepository->recherche($rechercheString);
-        }
-
-        $pagination = $paginator->paginate(
-            $results, /* query NOT result */
-       /*     $request->query->getInt('page', 1), /*page number*/
-             /*limit per page*/
-      /*  );
-
-        return $this->render('location/index.html.twig', [
-            'commandes' => $pagination,
-            'tri' => 'ASC'
-        ]);
-    }*/
-
-
     #[Route('/tristatute/{tri}', name: 'app_commande_index_tri_statue', methods: ['GET'])]
     public function triadresse($tri, CommandeRepository $commandeRepository, PaginatorInterface $paginator, Request $request): Response
     {

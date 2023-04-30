@@ -81,9 +81,6 @@ class ReclamationController extends AbstractController
 
 
 
-
-
-
     #[Route('/reclamation/search', name: 'app_reclamation_search')]
 public function search(Request $request, ReclamationRepository $reclamationRepository, PaginatorInterface $paginator): Response
 {
@@ -91,7 +88,10 @@ public function search(Request $request, ReclamationRepository $reclamationRepos
     $session = $request->getSession();
     $userId = $session->get('user')->getIdUser();
 
-    $reclamations = $reclamationRepository->searchReclamations($term, $userId);
+    // Get the status filter value from the query parameters
+    $statusFilter = $request->query->get('statusFilter');
+
+    $reclamations = $reclamationRepository->searchReclamations($term, $userId, $statusFilter);
 
     $pagination = $paginator->paginate(
         $reclamations,
@@ -109,6 +109,8 @@ public function search(Request $request, ReclamationRepository $reclamationRepos
             ],
             'required' => false,
             'placeholder' => false,
+            // Set the default value to the value from the query parameter
+            'data' => $statusFilter,
         ])
         ->getForm();
 
@@ -125,25 +127,39 @@ public function search(Request $request, ReclamationRepository $reclamationRepos
 
 
 
+//     #[Route('/reclamation/search', name: 'app_reclamation_search')]
+// public function search(Request $request, ReclamationRepository $reclamationRepository, PaginatorInterface $paginator): Response
+// {
+//     $term = $request->query->get('q');
+//     $session = $request->getSession();
+//     $userId = $session->get('user')->getIdUser();
 
+//     $reclamations = $reclamationRepository->searchReclamations($term, $userId);
 
+//     $pagination = $paginator->paginate(
+//         $reclamations,
+//         $request->query->getInt('page', 1),
+//         3
+//     );
 
+//     // Create the status filter form
+//     $statusFilterForm = $this->createFormBuilder()
+//         ->add('status', ChoiceType::class, [
+//             'choices' => [
+//                 'Tous les Reclamations' => '',
+//                 'Reclamation(s) Ouverte' => 'Ouvert',
+//                 'Reclamation(s) Fermée' => 'Fermée',
+//             ],
+//             'required' => false,
+//             'placeholder' => false,
+//         ])
+//         ->getForm();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//     return $this->render('reclamation/rec.html.twig', [
+//         'reclamations' => $pagination,
+//         'statusFilterForm' => $statusFilterForm->createView(),
+//     ]);
+// }
 
 
 
