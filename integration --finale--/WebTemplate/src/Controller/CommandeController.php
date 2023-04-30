@@ -173,17 +173,24 @@ class CommandeController extends AbstractController
     /**
      * @Route("/orderCOmmande", name="orderCommande")
      */
-    public function placeOrder(\App\Service\CartService1 $cartService, \App\Service\CommandeService $commandeService, MailerInterface $mailer)
+    public function placeOrder(\App\Service\CartService1 $cartService, \App\Service\CommandeService $commandeService, MailerInterface $mailer,Request $request)
     {
         $total = $cartService->getTotal() * 1.12;
         if ($total > 100) {
             $total -= $total * 0.1;
         }
+
+        $user_connected = new User();
+        $session = $request->getSession();
+        $user_connected = $session->get('user');
+        $user = $user_connected->getEmail();
+
+
         $order = $cartService->getCurrentOrder();
         $commandeService->placeOrder($order, $cartService, $this->getDoctrine()->getManager());
         $email = (new Email())
-            ->from('from@example.com')
-            ->to("to@example.com")
+            ->from('touskieart.reclamations@gmail.com')
+            ->to($user)
             ->subject('Ordre')
             ->html("<!doctype html>
             <html>
