@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: May 01, 2023 at 01:10 AM
+-- Generation Time: May 01, 2023 at 10:17 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -83,10 +83,7 @@ CREATE TABLE `commande` (
 --
 
 INSERT INTO `commande` (`id_c`, `date`, `user`, `statue`, `remise`) VALUES
-(23, '2023-04-29 17:54:00', '6', 'approved', 0),
-(24, '2023-04-29 17:54:00', '6', 'approved', 0),
-(38, '2023-05-01 01:06:56', '37', 'pending', 0),
-(39, '2023-05-01 01:08:38', '38', 'pending', 0);
+(40, '2023-05-01 17:21:20', '39', 'pending', 0);
 
 -- --------------------------------------------------------
 
@@ -140,7 +137,6 @@ CREATE TABLE `commentaire` (
 --
 
 INSERT INTO `commentaire` (`id_user`, `id_com`, `commentaire`, `id_event`, `LikeCount`) VALUES
-(35, 2, 'waw nice event! <3', 4, 0),
 (34, 3, 'Hello world', 3, 0);
 
 -- --------------------------------------------------------
@@ -333,8 +329,10 @@ CREATE TABLE `reclamation` (
 --
 
 INSERT INTO `reclamation` (`rec_id`, `user_id`, `titre_rec`, `type`, `description`, `dateCreation`, `dateFin`, `status`) VALUES
-(185, 36, 'aaaaaaa', 'Evénement', 'aaaaaaaaaaa', '2023-04-30', '2023-04-30', 'Fermée'),
-(191, 31, 'fgdfgdhgdfghf', 'Evénement', 'fgdfgdhgdfghffgdfgdhgdfghffgdfgdhgdfghffgdfgdhgdfghffgdfgdhgdfghffgdfgdhgdfghf', '2023-04-30', NULL, 'Ouvert');
+(193, 39, 'Mon expérience utilisateur a été terrible', 'User', 'La plate-forme est vraiment lente et je ne peux pas modifier mes informations sur ma page de profil', '2023-05-01', NULL, 'Ouvert'),
+(194, 39, 'Billets manquants', 'Ticket', 'Je n\'arrive pas à trouver mes billets, aidez-moi s\'il vous plaît', '2023-05-01', NULL, 'Ouvert'),
+(195, 39, 'Les événements ne sont pas cliquables', 'Evénement', 'Parfois, je n\'arrive pas à ouvrir les événements, et d\'autres fois, il faut une éternité pour en charger un, quel est le problème ?', '2023-05-01', '2023-05-01', 'Fermée'),
+(196, 39, 'Impossible de se connecter', 'Autre aide', 'Le site Web affiche des erreurs étranges', '2023-05-01', '2023-05-01', 'Fermée');
 
 -- --------------------------------------------------------
 
@@ -371,7 +369,11 @@ INSERT INTO `reponses` (`rep_id`, `rec_id`, `user_id`, `admin_id`, `rep_descript
 (623, 185, 31, NULL, 'aaaaaaaaaaaaaaaaaaaa', '2023-04-30', 1),
 (624, 192, 34, NULL, 'reponse new', '2023-05-01', 0),
 (625, 192, 34, NULL, 'REPONSE USER', '2023-05-01', 0),
-(626, 192, 34, NULL, 'new reponse', '2023-05-01', 0);
+(626, 192, 34, NULL, 'new reponse', '2023-05-01', 0),
+(627, 195, 39, NULL, 'Nous pensons que cela a été corrigé, merci de votre patience', '2023-05-01', 1),
+(628, 196, 39, NULL, 'Nous y travaillons, merci pour votre patience', '2023-05-01', 1),
+(629, 196, 39, NULL, 'je pense que c\'est en quelque sorte réparé maintenant, ça marche', '2023-05-01', 0),
+(630, 196, 39, NULL, 'Très bien, je vais fermer cette réclamation maintenant, content que ce soit corrigé', '2023-05-01', 1);
 
 -- --------------------------------------------------------
 
@@ -420,12 +422,8 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id_user`, `nom`, `prenom`, `email`, `mdp`, `tel`, `image`, `role`, `etat`) VALUES
 (26, 'Achref', 'Boussada', 'email@gmail.com', '123', 12345678, 'imgMe-6449760a87b3c.png', 'Admin', 'activé'),
-(31, 'Achref', 'Boussada', 'admin@gmail.com', '123', 12345678, 'imgMe-6449760a87b3c.png', 'Admin', 'activé'),
 (34, 'Mahmoud', 'Mzoughi', 'mahmoudmzoughi@gmail.com', '1234', 12345678, 'imgMe-6449a16cef6bf.png', 'simple utilisateur', 'activé'),
-(35, 'Mehrez', 'Ayo', 'm@m.com', '123', 12345678, 'profile-pic-644eaa72dc72c.jpg', 'simple utilisateur', 'activé'),
-(36, 'sylas', 'garen', 'hmaidi185@gmail.com', 'azerty', 58229725, 'profile-pic-644eaaa92401e.jpg', 'simple utilisateur', 'activé'),
-(37, 'UserNom', 'UserPrenom', 'EmailUser@gmail.com', '123', 12345678, 'imgMe-644eefcd62fae.png', 'Artiste', 'activé'),
-(38, 'NomUser', 'PrnomUser', 'ashrefboussada@gmail.com', '123', 12345678, 'imgMe-644ef4eea71f5.png', 'Artiste', 'activé');
+(39, 'Mahmoud Esp', 'Mzou', 'mahmoud.mzoughi@esprit.tn', '123', 12345678, 'imgMe-644fd8ee16076.png', 'Artiste', 'activé');
 
 --
 -- Indexes for dumped tables
@@ -589,13 +587,13 @@ ALTER TABLE `categorie`
 -- AUTO_INCREMENT for table `commande`
 --
 ALTER TABLE `commande`
-  MODIFY `id_c` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id_c` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `commande_item`
 --
 ALTER TABLE `commande_item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `commentaire`
@@ -637,7 +635,7 @@ ALTER TABLE `location`
 -- AUTO_INCREMENT for table `messenger_messages`
 --
 ALTER TABLE `messenger_messages`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
 
 --
 -- AUTO_INCREMENT for table `produit`
@@ -649,13 +647,13 @@ ALTER TABLE `produit`
 -- AUTO_INCREMENT for table `reclamation`
 --
 ALTER TABLE `reclamation`
-  MODIFY `rec_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=193;
+  MODIFY `rec_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=202;
 
 --
 -- AUTO_INCREMENT for table `reponses`
 --
 ALTER TABLE `reponses`
-  MODIFY `rep_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=627;
+  MODIFY `rep_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=631;
 
 --
 -- AUTO_INCREMENT for table `ticket`
@@ -667,7 +665,7 @@ ALTER TABLE `ticket`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- Constraints for dumped tables
