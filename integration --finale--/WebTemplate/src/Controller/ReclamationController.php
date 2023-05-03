@@ -20,6 +20,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
@@ -435,6 +436,53 @@ public function search(Request $request, ReclamationRepository $reclamationRepos
 
         return $this->redirectToRoute('show_reclamationById_admin', ['id' => $reclamation->getRecId()]);
     }
+
+    // // _________________________________________________________________________________________________________________
+
+    //                                         JSON
+
+    //  // _________________________________________________________________________________________________________________ 
+
+
+    #[Route('reclamationJSON/new', name: 'new_reclamationJSON')]
+    public function newRecJson(Request $request, NormalizerInterface $Normalizer)
+    {
+        $reclamation = new Reclamation();
+        $reclamation->setTitreRec($request->get('titreRec'));
+        $reclamation->setType($request->get('typeRec'));
+        $reclamation->setDescription($request->get('descRec'));
+        $reclamation->setDateCreation(new \DateTime());
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $userId = $request->get('userId');
+        $user = $entityManager->getRepository(User::class)->find($userId);
+        if (!$user) {
+            return new Response('User not found', Response::HTTP_NOT_FOUND);
+        }
+
+        $reclamation->setUser($user);
+                
+        $entityManager->persist($reclamation);
+        $entityManager->flush();
+        $jsonContent = $Normalizer->normalize($reclamation, 'json', ['groups' => 'reclamations']);
+        return new Response(json_encode($jsonContent));
+    }
+
+    #[Route('reclamationParIdJSON/', name: 'rec_reclamationParIdJSON')]
+    public function getRecParId(Request $request, NormalizerInterface $Normalizer, ReclamationRepository $reclamationRepository)
+    {
+        $userId = $request->get('userId');
+        $reclamations = $reclamationRepository->findByUserId($userId);
+        $reclamationsNormalises = $Normalizer->normalize($reclamations, 'json');
+
+        $json = json_encode($reclamationsNormalises);
+
+        return new Response($json);
+
+    }
+
+
 
 
 }
