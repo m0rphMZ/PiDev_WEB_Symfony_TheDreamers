@@ -4,9 +4,9 @@
 
 {% block body %}
 
-    <a href="{{ path('app_event_index') }}">back to list</a>
+    <a href="{{ path('app_event_index') }}">Retourner</a>
 
-    <a href="{{ path('app_event_edit', {'eventId': event.eventId}) }}">edit</a>
+    <a href="{{ path('app_event_edit', {'eventId': event.eventId}) }}">Modifier</a>
 
 
 
@@ -20,7 +20,7 @@
         <div class="row gy-4">
           <div class="col-lg-7 position-relative about-img" style="background-image: url({{ asset('uploads/images/' ~ event.affiche) }}" data-aos="fade-up" data-aos-delay="150">
             <div class="call-us position-absolute">
-              <h4>Ticket Price: {{ event.ticketprice }} dt.</h4>
+              <h4>Prix: {{ event.ticketprice }} dt.</h4>
               {% if event.ticketCount > 0 %}
                 <form method="post" action="{{ path('app_ticket_checkout_tic', {'id': event.eventId}) }}">
                     <button type="submit" onclick="return confirm('Are you sure you want to buy this ticket?')" 
@@ -31,10 +31,10 @@
                         color: #fff;
                         transition: 0.4s;
                         border-radius: 50px;
-                    ">Buy Ticket</button>
+                    ">Acheter un ticket</button>
                 </form>
             {% else %}
-                <p>Sold Out</p>
+                <p>épuisé!</p>
             {% endif %}
             </div>
           </div>
@@ -62,14 +62,14 @@
             </p>
 
             <ul>
-                <li><i class="bi bi-check2-all"></i>Ticket count:</li>
+                <li><i class="bi bi-check2-all"></i>Nombre de tickets restants:</li>
             </ul>
             <p class="fst-italic">
                 {{ event.ticketcount }}
             </p>
 
             <ul>
-                <li><i class="bi bi-check2-all"></i>Location:</li>
+                <li><i class="bi bi-check2-all"></i>Lieu:</li>
             </ul>
             <p class="fst-italic">
                 {{ event.location.getLieuLoc() }}
@@ -88,7 +88,7 @@
 
       </div>
     </section><!-- End About Section -->
-    <h2>Comments</h2>
+    <h2>Commentaires</h2>
     {{ commentaireResponse|raw }}
 
     {# {{ include('event/_delete_form.html.twig') }} #}

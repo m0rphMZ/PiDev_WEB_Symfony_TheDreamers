@@ -8,7 +8,7 @@
 {# =========== Search Code ================ #}
 <div class="form-group">
         <input type="checkbox" id="advancedSearchToggle" name="advancedSearch" value="1">
-        <label for="advancedSearchToggle">Advanced Search</label>
+        <label for="advancedSearchToggle">Recherche Avancée</label>
 </div>
 <!-- advanced search criteria -->
     <div id="advancedSearchCriteria" style="display: none;">
@@ -17,7 +17,7 @@
         <div class="row">
             <div class="col">
                 <div class="form-group">
-                    <label for="title">Title</label>
+                    <label for="title">Titre</label>
                     <input type="text" name="title" class="form-control" value="{{ criteria.title }}">
                 </div>
             </div>
@@ -25,10 +25,10 @@
                 <div class="form-group">
                     <label for="type">Type</label>
                     <select name="type" class="form-control">
-                    <option value="">-- All --</option>
-                    <option value="outdoors"{{ criteria.type == 'outdoors' ? ' selected' : '' }}>Outdoors</option>
+                    <option value="">-- Tout --</option>
+                    <option value="Plein air"{{ criteria.type == 'Plein air' ? ' selected' : '' }}>Plein air</option>
                     <option value="Conference"{{ criteria.type == 'Conference' ? ' selected' : '' }}>Conference</option>
-                    <option value="Exhibition"{{ criteria.type == 'Exhibition' ? ' selected' : '' }}>Exhibition</option>
+                    <option value="Exposition"{{ criteria.type == 'Exposition' ? ' selected' : '' }}>Exposition</option>
                 </select>
             </div>
         </div>
@@ -36,13 +36,13 @@
     <div class="row">
         <div class="col">
             <div class="form-group">
-                <label for="startDate">Start Date</label>
+                <label for="startDate">Date de début</label>
                 <input type="date" name="startDate" class="form-control" value="{{ criteria.startDate }}">
             </div>
         </div>
         <div class="col">
             <div class="form-group">
-                <label for="endDate">End Date</label>
+                <label for="endDate">Date de fin</label>
                 <input type="date" name="endDate" class="form-control" value="{{ criteria.endDate }}">
             </div>
         </div>
@@ -50,13 +50,13 @@
     <div class="row">
         <div class="col">
             <div class="form-group">
-                <label for="minPrice">Min. Price</label>
+                <label for="minPrice">Prix Min.</label>
                 <input type="number" name="minPrice" class="form-control" value="{{ criteria.minPrice }}">
             </div>
         </div>
         <div class="col">
             <div class="form-group">
-                <label for="maxPrice">Max. Price</label>
+                <label for="maxPrice">Prix Max.</label>
                 <input type="number" name="maxPrice" class="form-control" value="{{ criteria.maxPrice }}">
             </div>
         </div>
@@ -67,28 +67,28 @@
     <div class="row">
         <div class="col">
             <div class="form-group">
-                <label for="sort">Sort by</label>
+                <label for="sort">Trier par</label>
                 <select name="sort" class="form-control">
-                    <option value="title">Title</option>
+                    <option value="title">Titre</option>
                     <option value="type">Type</option>
-                    <option value="startdate">Start date</option>
-                    <option value="enddate">End date</option>
-                    <option value="ticketprice">Ticket price</option>
+                    <option value="startdate">Date de début</option>
+                    <option value="enddate">Date de fin</option>
+                    <option value="ticketprice">Prix</option>
                 </select>
             </div>
         </div>
         <div class="col">
             <div class="form-group">
-                <label for="order">Order by</label>
+                <label for="order">Ordonner par</label>
                 <select name="order" class="form-control">
-                    <option value="asc">Ascending</option>
-                    <option value="desc">Descending</option>
+                    <option value="asc">Ascendante</option>
+                    <option value="desc">Descente</option>
                 </select>
             </div>
         </div>
     </div>
     <div class="form-group">
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Soumettre</button>
     </div>
 </form>
 
@@ -98,12 +98,12 @@
         <thead>
             <tr>
                 <th>Affiche</th>
-                <th>Title</th>
+                <th>Titre</th>
                 <th>Type</th>
-                <th>Startdate</th>
-                <th>Enddate</th>
-                <th>Ticketprice</th>
-                <th>actions</th>
+                <th>Date de début</th>
+                <th>Date de fin</th>
+                <th>Prix</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody id="event-list">
@@ -122,7 +122,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="10">no records found</td>
+                <td colspan="10">Pas d'entrée trouvée</td>
             </tr>
         {% endfor %}
         </tbody>
@@ -135,7 +135,7 @@
         </div>
     {% endif %}
 
-    <a href="{{ path('app_event_new_admin') }}">Create new</a>
+    <a href="{{ path('app_event_new_admin') }}">Créer un nouvel événement</a>
 
 {# ========== Advanced Search Toggle =========== #}
 <script>

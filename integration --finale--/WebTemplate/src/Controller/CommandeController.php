@@ -607,7 +607,7 @@ class CommandeController extends AbstractController
                         'product_data' => [
                             'name' => 'test',
                         ],
-                        'unit_amount' => $total * 100,
+                        'unit_amount' => $total * 1000,
                     ],
                     'quantity' => 1,
                 ]

@@ -13,14 +13,21 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 
 use Stripe\Stripe;
+use Endroid\QrCode\QrCode;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+
 use Endroid\QrCodeBundle\Response\QrCodeResponse;
-use BaconQrCode\Renderer\ImageRenderer;
-use BaconQrCode\Renderer\Image\ImagickImageBackEnd;
-use BaconQrCode\Renderer\RendererStyle\RendererStyle;
-use BaconQrCode\Writer;
+use Endroid\QrCode\Writer\PngWriter;
 
 class TicketPaymentController extends AbstractController
 {
+    private $qrCodeDir;
+
+    public function __construct(ParameterBagInterface $params)
+    {
+        $this->qrCodeDir = $params->get('kernel.project_dir') . '/public/img/qrcode';
+    }
+
     #[Route('/purtic', name: 'app_ticket_purtic')]
     public function index(): Response
     {
@@ -83,7 +90,9 @@ class TicketPaymentController extends AbstractController
 
         // // Set the QR code image path on the ticket entity
         // $ticket->setQrcodeimg('img/tickets/' . $ticket->getTicketId() . '.png');
-        $ticket->setQrcodeimg('QR Code');
+        $qrCodeData = "Event: " . $event->getTitle() . "\nTicket price: " . $ticket->getPrice() . "\nOwner: " . $user->getNom();;
+        $ticket->setQrCodeImg($this->generateQrCode($qrCodeData));
+        //$ticket->setQrcodeimg('QR Code');
 
         // decrease the remaining tickets count for the event
         $event->setTicketcount($event->getTicketcount() - 1);
@@ -104,6 +113,23 @@ class TicketPaymentController extends AbstractController
         return $this->render('ticket_payment/cancel.html.twig', [
             'controller_name' => 'TicketPaymentController',
         ]);
+    }
+
+    public function generateQrCode(string $data): string
+    {
+        $writer = new PngWriter();
+        $qrCode = new QrCode($data);
+        $qrCode->setSize(256);
+        $qrCode->setMargin(10);
+        $fileName = uniqid() . '.png';
+        $qrCodePath = $this->qrCodeDir . '/' . $fileName;
+        if (!file_exists($this->qrCodeDir)) {
+            mkdir($this->qrCodeDir, 0755, true);
+        }
+        $result = $writer->write($qrCode);
+        $result->saveToFile($qrCodePath);
+        //$qrDBImgPath = '/public/img/qrcode/' . $filName;
+        return $fileName;
     }
 
 }

@@ -113,8 +113,12 @@ input[type="text"] {
                   <p>prix : {{ location.prixLoc}} dt.</p>
                    <p>{{ location.equipements}}</p>
                     <p> disponibilite: {{ location.disponibilite}}</p>
+
+                    {% if app.session.get('user') is not null %}
                     <a class="btn btn-danger" href="{{ path('thankyou') }}" style="margin-left: 10px;">louer</a><br><br><br>
-              
+                    {% else %}
+                    <a href={{path('app_login')}}>Louer</a>
+                    {% endif %}
               </div>
             </div>
           </div><!-- End Chefs Member -->

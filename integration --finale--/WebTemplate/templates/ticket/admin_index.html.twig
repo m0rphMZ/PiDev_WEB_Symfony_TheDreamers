@@ -8,12 +8,13 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Ticket Owner</th>
-                <th>Event</th>
-                <th>Price</th>
-                <th>Start date</th>
-                <th>End date</th>
-                <th>actions</th>
+                <th>Propriétaire</th>
+                <th>Événement</th>
+                <th>Prix</th>
+                <th>Date de début</th>
+                <th>Date de fin</th>
+                <th>Qr Code</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -24,6 +25,7 @@
                 <td>{{ ticket.price }}</td>
                 <td>{{ ticket.event.startdate|date('d-m-Y') }}</td>
                 <td>{{ ticket.event.enddate|date('d-m-Y') }}</td>
+                <td><img src="{{ asset('img/qrcode/' ~ ticket.qrCodeImg) }}" class="img-fluid" alt="" style="width: 100px; height: auto;"></td>
                 <td>
                     {# <a href="{{ path('app_ticket_show', {'ticketId': ticket.ticketId}) }}">show</a> #}
                     <a href="{{ path('app_ticket_edit', {'ticketId': ticket.ticketId}) }}">edit</a>
@@ -31,7 +33,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="4">aucune entrée n'a été trouvée</td>
             </tr>
         {% endfor %}
         </tbody>
